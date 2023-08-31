@@ -1372,11 +1372,24 @@ h6 {
   margin-bottom: 15px;
 }
 
-#footer .footer-top .form #sendmessage.show,
-#footer .footer-top .form #errormessage.show,
-#footer .footer-top .form .show {
-  display: block;
-}
+    #footer .form #response {
+        /*color: #fff;*/
+        display: none;
+        /*background: red;*/
+        text-align: center;
+        padding: 15px;
+        font-weight: 600;
+        margin-bottom: 15px;
+    }
+    #footer .footer-top .form #response.show {
+        display: block;
+    }
+
+    #footer .footer-top .form #sendmessage.show,
+    #footer .footer-top .form #errormessage.show,
+    #footer .footer-top .form .show {
+        display: block;
+    }
 
 #footer .footer-top .form .validation {
   color: red;

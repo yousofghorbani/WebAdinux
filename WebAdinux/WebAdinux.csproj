@@ -8,7 +8,17 @@
 
   <ItemGroup>
     <PackageReference Include="AspNetCore.ReCaptcha" Version="1.7.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.10">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="7.0.9" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\WebAdinux.Context\WebAdinux.Context.csproj" />
+    <ProjectReference Include="..\WebAdinux.Core\WebAdinux.Core.csproj" />
+    <ProjectReference Include="..\WebAinux.IOC\WebAdinux.IOC.csproj" />
   </ItemGroup>
 
 </Project>

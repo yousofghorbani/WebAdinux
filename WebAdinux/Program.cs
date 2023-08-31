@@ -1,10 +1,16 @@
 using AspNetCore.ReCaptcha;
+using Microsoft.EntityFrameworkCore;
+using WebAdinux.Context.Context;
+using WebAdinux.IOC;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddReCaptcha(builder.Configuration.GetSection("ReCaptcha"));
+//builder.Services.AddReCaptcha(builder.Configuration.GetSection("ReCaptcha"));
+builder.Services.RegisterServices(builder.Configuration);
+builder.Services.AddDbContext<DataBaseContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

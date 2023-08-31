@@ -102,12 +102,12 @@ jQuery(document).ready(function($) {
         // alert(msg);
         if (msg == 'OK') {
           $("#sendmessage").addClass("show");
-          $("#errormessage").removeClass("show");
+            $("#response").removeClass("show");
           $('.contactForm').find("input, textarea").val("");
         } else {
           $("#sendmessage").removeClass("show");
-          $("#errormessage").addClass("show");
-          $('#errormessage').html(msg);
+            $("#response").addClass("show");
+            $('#response').html(msg);
         }
 
       }

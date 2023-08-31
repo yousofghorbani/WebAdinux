@@ -1,17 +1,19 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using WebAdinux.Core.Interfaces;
+using WebAdinux.Core.ViewMoels;
 using WebAdinux.Models;
 
 namespace WebAdinux.Controllers
 {
     public class HomeController : Controller
     {
-        //private readonly ILogger<HomeController> _logger;
+        private readonly IEmailMessage _email;
 
-        //public HomeController(ILogger<HomeController> logger)
-        //{
-        //    _logger = logger;
-        //}
+        public HomeController(IEmailMessage email)
+        {
+            _email = email;
+        }
 
         public IActionResult Index()
         {
@@ -54,6 +56,21 @@ namespace WebAdinux.Controllers
         }
         [Route("/Adimatch")]
         public IActionResult Adimactch()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> SendMail(EmailMessageViewModel viewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                await _email.Add(viewModel);
+                return RedirectToAction("MailSended", "Home");
+            }
+            return View(viewModel);
+        }
+        public IActionResult MailSended()
         {
             return View();
         }
