@@ -1,4 +1,5 @@
 using AspNetCore.ReCaptcha;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using WebAdinux.Context.Context;
 using WebAdinux.IOC;
@@ -11,6 +12,19 @@ builder.Services.AddControllersWithViews();
 builder.Services.RegisterServices(builder.Configuration);
 builder.Services.AddDbContext<DataBaseContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+    options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+}).AddCookie(options =>
+{
+    options.LoginPath = "/Account/Login";
+    options.LogoutPath = "/Account/LogOut";
+    options.ExpireTimeSpan = TimeSpan.FromDays(10);
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
