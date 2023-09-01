@@ -2,31 +2,44 @@
 
 @{
     ViewData["Title"] = "Login";
-    Layout = "~/Views/Shared/_AccountLayout.cshtml";
+    Layout = "~/Views/Shared/_PageLayout.cshtml";
 }
 
-<img src="~/img/Adinux/AdinuxLogo.png" style="width:200px"/>
-<h3 class="mb-5">Sign in</h3>
-<form asp-action="Login">
-    <div class="form-group form-outline mb-4">
-        @*<label asp-for="Email" class="form-label" for="typeEmailX-2"></label>*@
-        <input asp-for="UserName" id="typeEmailX-2" class="form-control form-control-lg" placeholder="Username" />
-        <span asp-validation-for="UserName" class="text-danger"></span>
-    </div>
-    <div class="form-group form-outline mb-4">
-        @*<label asp-for="Password" class="form-label" for="typePasswordX-2"></label>*@
-        <input asp-for="Password" type="password" id="typePasswordX-2" class="form-control form-control-lg" placeholder="Password" />
-        <span asp-validation-for="Password" class="text-danger"></span>
-    </div>
+<section class="vh-100">
+    <div class="container py-5 h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+                <div class="card shadow-2-strong" style="border-radius: 1rem;">
+                    <div class="card-body p-5 text-center">
+                        <img src="~/img/Adinux/AdinuxLogo.png" style="width:200px" />
+                        <h3 class="mb-5">Sign in</h3>
+                        <form asp-action="Login">
+                            <div class="form-group form-outline mb-4">
+                                @*<label asp-for="Email" class="form-label" for="typeEmailX-2"></label>*@
+                                <input asp-for="UserName" id="typeEmailX-2" class="form-control form-control-lg" placeholder="Username" />
+                                <span asp-validation-for="UserName" class="text-danger"></span>
+                            </div>
+                            <div class="form-group form-outline mb-4">
+                                @*<label asp-for="Password" class="form-label" for="typePasswordX-2"></label>*@
+                                <input asp-for="Password" type="password" id="typePasswordX-2" class="form-control form-control-lg" placeholder="Password" />
+                                <span asp-validation-for="Password" class="text-danger"></span>
+                            </div>
 
-    <div class="form-group">
-        <button class="btn btn-primary btn-lg btn-block" type="submit">Login</button>
+                            <div class="form-group">
+                                <button class="btn btn-primary btn-lg btn-block" type="submit">Login</button>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+</section>
 
-</form>
 
-@section Scripts {
+@*@section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
-    }
+    }*@
