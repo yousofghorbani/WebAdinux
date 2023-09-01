@@ -46,5 +46,17 @@ namespace WebAdinux.Core.Services
             subject = x.subject,
             MessageContent = x.MessageContent,
         }).ToListAsync();
+
+        public async Task<GetEmailMessageViewModel?> GetById(long id) => await _context.emailMessages.Select(x => new GetEmailMessageViewModel
+        {
+            Id = x.Id,
+            Name = x.Name,
+            CreatedAt = x.CreatedAt,
+            ModifiedAt = x.ModiFiedAt,
+            Email = x.Email,
+            subject = x.subject,
+            MessageContent = x.MessageContent,
+        }).FirstOrDefaultAsync(x=> x.Id == id);
+
     }
 }

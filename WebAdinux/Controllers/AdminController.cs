@@ -13,14 +13,26 @@ namespace WebAdinux.Controllers
     public class AdminController : Controller
     {
         private readonly IUser _user;
+        private readonly IEmailMessage _emailMessage;
 
-        public AdminController(IUser user)
+        public AdminController(IUser user, IEmailMessage emailMessage)
         {
             _user = user;
+            _emailMessage = emailMessage;
         }
 
+        [Authorize]
+        public async Task<IActionResult> Logout()
+        {
+            await HttpContext.SignOutAsync();
+            return RedirectToAction("Index", "Home");
+        }
         public IActionResult Login()
         {
+            if(HttpContext.User.Claims.Any())
+            {
+                return RedirectToAction("RecivedMails", "Admin");
+            }
             return View();
         }
         [HttpPost]
@@ -47,12 +59,20 @@ namespace WebAdinux.Controllers
                 IsPersistent = true
             };
             await HttpContext.SignInAsync(principal, properties);
-            return RedirectToAction("Index", "Admin");
+            return RedirectToAction("RecivedMails", "Admin");
         }
         [Authorize]
-        public IActionResult Index()
+        public async Task<IActionResult> RecivedMails()
         {
-            return View();
+            var res = await _emailMessage.GetAll();
+            return View(res);
+        }
+
+        [Authorize]
+        public async Task<IActionResult> RecivedMailDetails([FromRoute] long id)
+        {
+            var res = await _emailMessage.GetById(id);
+            return View(res);
         }
     }
 }
