@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using WebAdinux.Context.Entities;
+using WebAdinux.Core.ViewMoels;
 
 namespace WebAdinux.Core.Interfaces
 {
     public interface IUser
     {
+        Task<User?> FindUser(LoginViewModel viewModel);
     }
 }

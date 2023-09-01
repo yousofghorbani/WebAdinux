@@ -10,7 +10,7 @@ namespace WebAdinux.Controllers
     {
         private readonly IEmailMessage _email;
 
-        public HomeController(IEmailMessage email)
+        public HomeController(IEmailMessage email, IUser user)
         {
             _email = email;
         }
