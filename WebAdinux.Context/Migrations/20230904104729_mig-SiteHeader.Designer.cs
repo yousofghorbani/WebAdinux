@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebAdinux.Context.Context;
 
@@ -11,9 +12,11 @@ using WebAdinux.Context.Context;
 namespace WebAdinux.Context.Migrations
 {
     [DbContext(typeof(DataBaseContext))]
-    partial class DataBaseContextModelSnapshot : ModelSnapshot
+    [Migration("20230904104729_mig-SiteHeader")]
+    partial class migSiteHeader
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -59,46 +62,6 @@ namespace WebAdinux.Context.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("emailMessages");
-                });
-
-            modelBuilder.Entity("WebAdinux.Context.Entities.SiteContent", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FileLink")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("HeaderId")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("Icon")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("ModiFiedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("Number")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("HeaderId");
-
-                    b.ToTable("siteContent");
                 });
 
             modelBuilder.Entity("WebAdinux.Context.Entities.SiteHeader", b =>
@@ -172,17 +135,6 @@ namespace WebAdinux.Context.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("WebAdinux.Context.Entities.SiteContent", b =>
-                {
-                    b.HasOne("WebAdinux.Context.Entities.SiteHeader", "siteHeader")
-                        .WithMany("siteContents")
-                        .HasForeignKey("HeaderId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("siteHeader");
-                });
-
             modelBuilder.Entity("WebAdinux.Context.Entities.SiteHeader", b =>
                 {
                     b.HasOne("WebAdinux.Context.Entities.SiteHeader", "siteHeader")
@@ -195,8 +147,6 @@ namespace WebAdinux.Context.Migrations
 
             modelBuilder.Entity("WebAdinux.Context.Entities.SiteHeader", b =>
                 {
-                    b.Navigation("siteContents");
-
                     b.Navigation("siteHeaders");
                 });
 #pragma warning restore 612, 618

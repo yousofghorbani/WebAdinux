@@ -22,6 +22,8 @@ namespace WebAdinux.Context.Context
 
         public DbSet<User> Users { get; set; }
         public DbSet<EmailMessage> emailMessages { get; set; }
+        public DbSet<SiteHeader> siteHeaders { get; set; }
+        public DbSet<SiteContent> siteContent { get; set; }
 
         #endregion
 
@@ -31,12 +33,40 @@ namespace WebAdinux.Context.Context
 
             modelBuilder.Entity<User>().HasKey(x=> x.Id);
             modelBuilder.Entity<EmailMessage>().HasKey(x=> x.Id);
+            modelBuilder.Entity<SiteHeader>().HasKey(x=> x.Id);
+            modelBuilder.Entity<SiteContent>().HasKey(x=> x.Id);
 
             #endregion
 
             #region Validation
 
             #endregion
+
+            modelBuilder.Entity<SiteHeader>()
+                .HasOne(x => x.siteHeader)
+                .WithMany(x => x.siteHeaders)
+                .HasForeignKey(x => x.ParentId)
+                .OnDelete(DeleteBehavior.NoAction);
+            
+            modelBuilder.Entity<SiteHeader>()
+                .HasMany(x => x.siteHeaders)
+                .WithOne(x => x.siteHeader)
+                .HasForeignKey(x => x.ParentId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+
+            modelBuilder.Entity<SiteContent>()
+                .HasOne(x=> x.siteHeader)
+                .WithMany(x=> x.siteContents)
+                .HasForeignKey(x=> x.HeaderId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<SiteHeader>()
+                .HasMany(x => x.siteContents)
+                .WithOne(x => x.siteHeader)
+                .HasForeignKey(x=> x.HeaderId)
+                .OnDelete(DeleteBehavior.NoAction);
+
 
             #region Relation
 
