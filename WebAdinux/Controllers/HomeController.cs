@@ -70,6 +70,11 @@ namespace WebAdinux.Controllers
             }
             return View(viewModel);
         }
+
+        public IActionResult AboutUs()
+        {
+            return View();
+        }
         public IActionResult MailSended()
         {
             return View();
