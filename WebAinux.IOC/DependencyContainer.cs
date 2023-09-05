@@ -11,6 +11,8 @@ namespace WebAdinux.IOC
         {
             services.AddTransient<IUser, UserService>();
             services.AddTransient<IEmailMessage, EmailMessageService>();
+            services.AddTransient<ISiteHeader, SiteHeaderService>();
+            services.AddTransient<ISiteContent, SiteContentService>();
         }
     }
 }

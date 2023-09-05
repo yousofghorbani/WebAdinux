@@ -42,12 +42,15 @@ namespace WebAdinux.Context.Context
 
             #endregion
 
+
+            #region Relation
+
             modelBuilder.Entity<SiteHeader>()
                 .HasOne(x => x.siteHeader)
                 .WithMany(x => x.siteHeaders)
                 .HasForeignKey(x => x.ParentId)
                 .OnDelete(DeleteBehavior.NoAction);
-            
+
             modelBuilder.Entity<SiteHeader>()
                 .HasMany(x => x.siteHeaders)
                 .WithOne(x => x.siteHeader)
@@ -56,19 +59,16 @@ namespace WebAdinux.Context.Context
 
 
             modelBuilder.Entity<SiteContent>()
-                .HasOne(x=> x.siteHeader)
-                .WithMany(x=> x.siteContents)
-                .HasForeignKey(x=> x.HeaderId)
+                .HasOne(x => x.siteHeader)
+                .WithMany(x => x.siteContents)
+                .HasForeignKey(x => x.HeaderId)
                 .OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<SiteHeader>()
                 .HasMany(x => x.siteContents)
                 .WithOne(x => x.siteHeader)
-                .HasForeignKey(x=> x.HeaderId)
+                .HasForeignKey(x => x.HeaderId)
                 .OnDelete(DeleteBehavior.NoAction);
-
-
-            #region Relation
 
             #endregion
         }
