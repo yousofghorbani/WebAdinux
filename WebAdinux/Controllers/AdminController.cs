@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
-using WebAdinux.Context.Entities;
 using WebAdinux.Context.Enums;
 using WebAdinux.Core.Interfaces;
 using WebAdinux.Core.ViewMoels;
@@ -14,12 +13,18 @@ namespace WebAdinux.Controllers
     {
         private readonly IUser _user;
         private readonly IEmailMessage _emailMessage;
+        private readonly ISiteHeader _siteHeader;
+        private readonly ISiteContent _siteContent;
 
-        public AdminController(IUser user, IEmailMessage emailMessage)
+        public AdminController(IUser user, IEmailMessage emailMessage, ISiteHeader siteHeader, ISiteContent siteContent)
         {
             _user = user;
             _emailMessage = emailMessage;
+            _siteHeader = siteHeader;
+            _siteContent = siteContent;
         }
+
+        #region Identity
 
         [Authorize]
         public async Task<IActionResult> Logout()
@@ -61,6 +66,9 @@ namespace WebAdinux.Controllers
             await HttpContext.SignInAsync(principal, properties);
             return RedirectToAction("RecivedMails", "Admin");
         }
+        #endregion
+
+        #region Mail
         [Authorize]
         public async Task<IActionResult> RecivedMails()
         {
@@ -74,5 +82,17 @@ namespace WebAdinux.Controllers
             var res = await _emailMessage.GetById(id);
             return View(res);
         }
+        #endregion
+
+        #region Site Header
+
+        [Authorize]
+        public async Task<IActionResult> SiteHeaders()
+        {
+            var res = await _siteHeader.Filter(null);
+            return View(res);
+        }
+
+        #endregion
     }
 }

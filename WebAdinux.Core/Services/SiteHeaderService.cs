@@ -50,7 +50,7 @@ namespace WebAdinux.Core.Services
             return true;
         }
 
-        public async Task<List<GetSiteHeaderViewModel>> Filter(bool hasDropDown) => await _context.siteHeaders.Where(x=> x.HasDropDown == hasDropDown).Select(x=> new GetSiteHeaderViewModel
+        public async Task<List<GetSiteHeaderViewModel>> Filter(bool? hasDropDown) => await _context.siteHeaders.Where(x=> hasDropDown == null ? true : x.HasDropDown == hasDropDown).Select(x=> new GetSiteHeaderViewModel
         {
             Id = x.Id,
             Title = x.Title,
