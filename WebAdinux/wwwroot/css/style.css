@@ -1600,3 +1600,47 @@ h6 {
     top: 10%;
     border: 1px white solid;
 }
+
+.panel-group {
+    margin-bottom: 20px;
+}
+
+.panel {
+    background-color: #f5f5f5;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-bottom: 15px;
+}
+
+.panel-heading {
+    padding: 10px 15px;
+    border-bottom: 1px solid transparent;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+}
+
+.panel-title {
+    margin-top: 0;
+    margin-bottom: 0;
+    font-size: 16px;
+    color: #333;
+}
+
+    .panel-title a {
+        /*display: block;*/
+        text-decoration: none;
+        color:black;
+    }
+
+        .panel-title a:hover {
+            text-decoration: none;
+        }
+
+.panel-collapse {
+    padding: 15px;
+    border-top: 1px solid #ddd;
+}
+
+.panel-body {
+    padding: 15px;
+}

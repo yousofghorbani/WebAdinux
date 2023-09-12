@@ -17,19 +17,19 @@ namespace WebAdinux.Core.Services
 
         public async Task<bool> Add(SiteHeaderViewModel viewModel)
         {
-            if(viewModel.ParentId != null)
+            if (viewModel.ParentId != null)
             {
-                var exists = await _context.siteHeaders.AnyAsync(x=> x.ParentId == viewModel.ParentId && x.HasDropDown == true);
+                var exists = await _context.siteHeaders.AnyAsync(x => x.Id == viewModel.ParentId && x.HasDropDown == true);
                 if (!exists) return false;
             }
-            if(viewModel.Link != null)
+            if (viewModel.Link != null)
             {
                 var exists = await _context.siteHeaders.AnyAsync(x => x.Link == viewModel.Link);
                 if (exists) return false;
             }
             SiteHeader siteHeader = new SiteHeader()
             {
-                HasDropDown = viewModel.HasDropDown,
+                HasDropDown = (bool)viewModel.HasDropDown,
                 Link = viewModel.Link,
                 ParentId = viewModel.ParentId,
                 Title = viewModel.Title,
@@ -50,7 +50,7 @@ namespace WebAdinux.Core.Services
             return true;
         }
 
-        public async Task<List<GetSiteHeaderViewModel>> Filter(bool? hasDropDown) => await _context.siteHeaders.Where(x=> hasDropDown == null ? true : x.HasDropDown == hasDropDown).Select(x=> new GetSiteHeaderViewModel
+        public async Task<List<GetSiteHeaderViewModel>> Filter(bool? hasDropDown) => await _context.siteHeaders.Where(x => hasDropDown == null ? true : x.HasDropDown == hasDropDown).Select(x => new GetSiteHeaderViewModel
         {
             Id = x.Id,
             Title = x.Title,
@@ -58,13 +58,15 @@ namespace WebAdinux.Core.Services
             HasDropDown = x.HasDropDown,
             Link = x.Link,
             ModifiedAt = x.ModiFiedAt,
-            ParentId=x.ParentId
+            ParentId = x.ParentId
         }).ToListAsync();
+
+        public async Task<SiteHeaderViewModel> GetById(long id) => await _context.siteHeaders.Where(x => x.Id == id).Select(x => new SiteHeaderViewModel { HasDropDown = x.HasDropDown, Link = x.Link, ParentId = x.ParentId, Title = x.Title }).FirstOrDefaultAsync();
 
         public async Task<bool> Update(long id, SiteHeaderViewModel viewModel)
         {
             var siteHeader = await _context.siteHeaders.FirstOrDefaultAsync(x => x.Id == id);
-            
+
             if (siteHeader == null) return false;
             if (viewModel.ParentId != null)
             {
@@ -73,15 +75,15 @@ namespace WebAdinux.Core.Services
             }
             if (viewModel.Link != null)
             {
-                var exists = await _context.siteHeaders.AnyAsync(x => x.Link == viewModel.Link);
+                var exists = await _context.siteHeaders.AnyAsync(x => x.Link == viewModel.Link && x.Id != id);
                 if (exists) return false;
             }
 
             siteHeader.Title = viewModel.Title;
             siteHeader.ModiFiedAt = DateTime.Now;
             siteHeader.Link = viewModel.Link;
-            siteHeader.ParentId = viewModel.ParentId;
-            siteHeader.HasDropDown = viewModel.HasDropDown;
+            //siteHeader.ParentId = viewModel.ParentId;
+            //siteHeader.HasDropDown = (bool)viewModel.HasDropDown;
 
             await _context.SaveChangesAsync();
 

@@ -130,3 +130,28 @@
 
 })(jQuery);
 
+//$(document).ready(function () {
+//    // بستن همه پنل‌ها به جز پنل اول در ابتدای بارگذاری صفحه
+//    $('.panel:not(:first) .panel-collapse').collapse('hide');
+
+//    // تغییر آیکون پنل هنگام باز و بسته شدن
+//    $('.panel-heading').click(function () {
+//        $(this).find('.panel-title i').toggleClass('fa-chevron-up fa-chevron-down');
+//    });
+//});
+$(document).ready(function () {
+    // بستن همه پنل‌ها به جز پنل اول در ابتدای بارگذاری صفحه
+    $('.panel:not(:first) .panel-collapse').collapse('hide');
+
+    // تغییر آیکون پنل هنگام باز و بسته شدن
+    $('.panel-heading').click(function () {
+        var panelTitle = $(this).find('.panel-title');
+        var icon = panelTitle.find('i');
+
+        panelTitle.toggleClass('open');
+        /*icon.toggleClass('fa-chevron-up fa-chevron-down');*/
+
+        var panelCollapse = $(this).next('.panel-collapse');
+        panelCollapse.collapse('toggle');
+    });
+});

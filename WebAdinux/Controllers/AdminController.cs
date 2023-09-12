@@ -93,6 +93,80 @@ namespace WebAdinux.Controllers
             return View(res);
         }
 
+        [Authorize]
+        public IActionResult CreateHeader()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> CreateHeader(SiteHeaderViewModel viewModel)
+        {
+            if(!ModelState.IsValid) return View(viewModel);
+
+            viewModel.HasDropDown = true;
+            var res = await _siteHeader.Add(viewModel);
+            return Redirect("/Admin/SiteHeaders");
+        }
+
+        [Authorize]
+        public async Task<IActionResult> EditHeader(long id)
+        {
+            return View(await _siteHeader.GetById(id));
+        }
+
+        [Authorize]
+        public async Task<IActionResult> DeleteHeader(long id)
+        {
+            var res = await _siteHeader.Delete(id);
+            return Redirect("/Admin/SiteHeaders");
+        }
+
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> EditHeader(long id, SiteHeaderViewModel viewModel)
+        {
+            if (!ModelState.IsValid) return View(viewModel);
+
+            var res = await _siteHeader.Update(id ,viewModel);
+            return Redirect("/Admin/SiteHeaders");
+        }
+
+        [Authorize]
+        public IActionResult CreateSubHeader(long id)
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> CreateSubHeader(long id, SiteHeaderViewModel viewModel)
+        {
+            if (!ModelState.IsValid) return View(viewModel);
+
+            viewModel.HasDropDown = false;
+            viewModel.ParentId = id;
+            var res = await _siteHeader.Add(viewModel);
+            return Redirect("/Admin/SiteHeaders");
+        }
+
+        [Authorize]
+        public async Task<IActionResult> EditSubHeader(long id)
+        {
+            return View(await _siteHeader.GetById(id));
+        }
+
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> EditSubHeader(long id, SiteHeaderViewModel viewModel)
+        {
+            if (!ModelState.IsValid) return View(viewModel);
+
+            var res = await _siteHeader.Update(id, viewModel);
+            return Redirect("/Admin/SiteHeaders");
+        }
+
         #endregion
     }
 }

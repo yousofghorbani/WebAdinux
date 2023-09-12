@@ -1,0 +1,152 @@
+﻿@model IEnumerable<WebAdinux.Core.ViewMoels.GetSiteHeaderViewModel>
+
+@{
+    ViewData["Title"] = "SiteHeaders";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="margin-top: 150px">
+
+    <div class="margin-top-50">
+
+        <h3 class="pu">
+            <a href="#" onclick="Create()" class="btn btn-primary">Create</a>
+        </h3>
+
+    </div>
+
+    <div class="clearfix"></div>
+
+    <div class="margin-top-50">
+
+        <div class="accordion">
+
+            @foreach (var item in Model.Where(x => x.ParentId == null))
+            {
+
+                <div class="panel panel-default">
+
+                    <div class="panel-heading">
+
+                        <h4 class="panel-title">
+
+                            <a role="button" aria-expanded="true" data-toggle="collapse" data-parent="#@item.Id" href="#@item.Id">@item.Title</a>
+
+                            <a href="#" onclick="MyCreate(@item.Id)" style="color:green;"><i class="fa fa-plus-circle"></i></a>
+                            <a href="#" onclick="MyEdit(@item.Id)" style="color:orange;"><i class="fa fa-edit"></i></a>
+                            <a href="/Admin/DeleteHeader/@item.Id" style="color:red;"><i class="fa fa-trash"></i></a>
+
+                        </h4>
+
+                    </div>
+
+                    <div id="@item.Id" class="panel-collapse collapse">
+
+
+                        <div class="panel-body">
+
+                            @if (Model.Any(x => x.ParentId == item.Id))
+                            {
+
+                                @foreach (var subItem in Model.Where(x => x.ParentId == item.Id))
+                                {
+                                    <div class="panel panel-default">
+
+                                        <div class="panel-heading">
+
+                                            <h4 class="panel-title">
+
+                                                <a role="button" aria-expanded="true" data-toggle="collapse" data-parent="#@subItem.Id" href="#@subItem.Id">@subItem.Title</a>
+
+                                                <a href="/Admin/SiteContent/@subItem.Id" style="color:green;"><i class="fa fa-newspaper-o"></i></a>
+                                                <a href="#" onclick="MySubEdit(@subItem.Id)" style="color:orange;"><i class="fa fa-edit"></i></a>
+                                                <a href="/Admin/DeleteHeader/@subItem.Id" style="color:red;"><i class="fa fa-trash"></i></a>
+                                            </h4>
+
+                                        </div>
+                                    </div>
+                                }
+
+                            }
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            }
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+@section mySection
+    {
+    <script>
+        function MyCreate(id) {
+            $.ajax({
+                url: "/Admin/CreateSubHeader/" + id,
+                type: "Get",
+                data: {}
+            }).done(function (result) {
+                $('#myModal').modal('show');
+                $('#bodyModal').html(result);
+            });
+        }
+    </script>
+
+    <script>
+        function Create() {
+            $.ajax({
+                url: "/Admin/CreateHeader/",
+                type: "Get",
+                data: {}
+            }).done(function (result) {
+                $('#myModal').modal('show');
+                $('#bodyModal').html(result);
+            });
+        }
+    </script>
+
+    <script>
+        function MyEdit(id) {
+            $.ajax({
+                url: "/Admin/EditHeader/" + id,
+                type: "Get",
+                data: {}
+            }).done(function (result) {
+                $('#myModal').modal('show');
+                $('#bodyModal').html(result);
+            });
+        }
+    </script>
+
+    <script>
+        function MySubEdit(id) {
+            $.ajax({
+                url: "/Admin/EditSubHeader/" + id,
+                type: "Get",
+                data: {}
+            }).done(function (result) {
+                $('#myModal').modal('show');
+                $('#bodyModal').html(result);
+            });
+        }
+    </script>
+
+    <script>
+        function MyDelete(id) {
+            $.ajax({
+                url: "/Admin/DeleteHeader/" + id,
+                type: "Get",
+                data: {}
+            }).done();
+        }
+    </script>
+}

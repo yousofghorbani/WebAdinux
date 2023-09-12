@@ -8,5 +8,6 @@ namespace WebAdinux.Core.Interfaces
         Task<List<GetSiteHeaderViewModel>> Filter(bool? hasDropDown);
         Task<bool> Update(long id, SiteHeaderViewModel viewModel);
         Task<bool> Delete(long id);
+        Task<SiteHeaderViewModel> GetById(long id);
     }
 }

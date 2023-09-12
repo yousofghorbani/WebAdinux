@@ -4,7 +4,7 @@
     {
         public string Title { get; set; }
         public string? Link { get; set; }
-        public bool HasDropDown { get; set; }
+        public bool? HasDropDown { get; set; }
         public long? ParentId { get; set; }
     }
     public class GetSiteHeaderViewModel : SiteHeaderViewModel
