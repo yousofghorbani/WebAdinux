@@ -8,5 +8,6 @@ namespace WebAdinux.Core.Interfaces
         Task<bool> Remove(long id);
         Task<List<GetSiteContentViewModel>> GetByHeaderId(long headerId);
         Task<bool> Update(long id ,SiteContentViewModel viewModel);
+        Task<SiteContentViewModel?> GetById(long id);
     }
 }

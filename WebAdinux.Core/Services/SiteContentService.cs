@@ -50,6 +50,16 @@ namespace WebAdinux.Core.Services
             ModifiedAt = x.ModiFiedAt
         }).OrderBy(x=> x.Number).ToListAsync();
 
+        public async Task<SiteContentViewModel?> GetById(long id) => await _context.siteContent.Where(x => x.Id == id).Select(x => new SiteContentViewModel
+        {
+            HeaderId = x.HeaderId,
+            Description = x.Description,
+            FileLink = x.FileLink,
+            Number = x.Number,
+            Icon = x.Icon,
+            Title = x.Title,
+        }).FirstOrDefaultAsync();
+
         public async Task<bool> Remove(long id)
         {
             var content = await _context.siteContent.FirstOrDefaultAsync(x=> x.Id == id);
