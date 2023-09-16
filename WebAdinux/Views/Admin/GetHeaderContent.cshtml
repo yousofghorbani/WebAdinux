@@ -47,7 +47,7 @@
                     @Html.DisplayFor(modelItem => item.ContentType)
                 </td>
                 <td>
-                    @Html.ActionLink("Edit", "EditContent", new {  id=item.Id  }) |
+                    <a href="#" onclick="Edit(@item.Id)"> Edit</a> |
                     <a href="#" onclick="Details(@item.Id)"> Details</a> |
                     @Html.ActionLink("Delete", "DeleteContent", new {  id=item.Id  })
                 </td>
@@ -75,7 +75,7 @@
     <script>
         function Edit(id) {
             $.ajax({
-                url: "/Admin/EditHeader/" + id,
+                url: "/Admin/EditContent/" + id,
                 type: "Get",
                 data: {}
             }).done(function (result) {

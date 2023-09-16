@@ -242,9 +242,28 @@ namespace WebAdinux.Controllers
         }
 
         [HttpPost, Authorize]
-        public async Task<IActionResult> EditContent()
+        public async Task<IActionResult> EditContent(long id, SiteContentViewModel viewModel)
         {
-            return View();
+            var content = await _siteContent.GetById(id);
+            if (viewModel.ContentType == ContentType.Img || viewModel.ContentType == ContentType.Video)
+            {
+                if (viewModel.UploadFile != null)
+                {
+                    string filePath = "";
+                    viewModel.FileLink = HashGenerators.FileCode() + Path.GetExtension(viewModel.UploadFile.FileName);
+                    filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Upload/", viewModel.FileLink);
+
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        viewModel.UploadFile.CopyTo(stream);
+                    }
+                }
+            }
+
+            viewModel.HeaderId = id;
+            await _siteContent.Update(id, viewModel);
+
+            return Redirect("/Admin/GetHeaderContent/" + content.HeaderId);
         }
 
         [Authorize]

@@ -1,8 +1,62 @@
-﻿
+﻿@using WebAdinux.Context.Enums;
+@model WebAdinux.Core.ViewMoels.SiteContentViewModel
+
 @{
     ViewData["Title"] = "EditContent";
-    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    Layout = null;
 }
 
-<h1>EditContent</h1>
-
+<div class="modal-header">
+    <h5 class="modal-title">Edit Content</h5>
+</div>
+<hr />
+<form asp-action="EditContent" enctype="multipart/form-data">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="form-group">
+        <label asp-for="Title" class="control-label"></label>
+        <input asp-for="Title" class="form-control" />
+        <span asp-validation-for="Title" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Description" class="control-label"></label>
+        <input asp-for="Description" class="form-control" />
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Icon" class="control-label"></label>
+        <input asp-for="Icon" class="form-control" />
+        <span asp-validation-for="Icon" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="UploadFile" class="control-label"></label>
+        <input asp-for="UploadFile" class="form-control" />
+        <span asp-validation-for="UploadFile" class="text-danger"></span>
+    </div>
+    @* <div class="form-group hide">
+    <label asp-for="FileLink" class="control-label"></label>
+    <input asp-for="FileLink" class="form-control" />
+    <span asp-validation-for="FileLink" class="text-danger"></span>
+    </div> *@
+    <div class="form-group">
+        <label asp-for="Number" class="control-label"></label>
+        <input asp-for="Number" class="form-control" />
+        <span asp-validation-for="Number" class="text-danger"></span>
+    </div>
+    @* <div class="form-group hide">
+    <label asp-for="HeaderId" class="control-label"></label>
+    <input asp-for="HeaderId" class="form-control" value="@ViewBag.HeaderId" />
+    <span asp-validation-for="HeaderId" class="text-danger"></span>
+    </div> *@
+    <div class="mb-3 form-group">
+        <label asp-for="ContentType" class="control-label"></label>
+        <select asp-for="ContentType" class="form-control">
+            @foreach (ContentType contentType in (ContentType[])Enum.GetValues(typeof(ContentType)))
+            {
+                <option value="@contentType">@contentType.ToString()</option>
+            }
+        </select>
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Save" class="btn btn-primary" />
+    </div>
+</form>
