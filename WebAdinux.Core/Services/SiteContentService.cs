@@ -2,6 +2,7 @@
 using Microsoft.IdentityModel.Tokens;
 using WebAdinux.Context.Context;
 using WebAdinux.Context.Entities;
+using WebAdinux.Context.Enums;
 using WebAdinux.Core.Interfaces;
 using WebAdinux.Core.ViewMoels;
 
@@ -18,7 +19,7 @@ namespace WebAdinux.Core.Services
 
         public async Task<bool> Add(SiteContentViewModel viewModel)
         {
-            bool headerExists = await _context.siteHeaders.AnyAsync(x => x.Id == viewModel.HeaderId && !x.Link.IsNullOrEmpty());
+            bool headerExists = await _context.siteHeaders.AnyAsync(x => x.Id == viewModel.HeaderId);
             if (!headerExists) return false;
 
             SiteContent content = new SiteContent()
@@ -29,6 +30,7 @@ namespace WebAdinux.Core.Services
                 FileLink = viewModel.FileLink,
                 Number = viewModel.Number,
                 HeaderId = viewModel.HeaderId,
+                ContentType = (short)viewModel.ContentType
             };
 
             await _context.siteContent.AddAsync(content);
@@ -47,7 +49,8 @@ namespace WebAdinux.Core.Services
             Number = x.Number,
             HeaderId = x.HeaderId,
             CreatedAt = x.CreatedAt,
-            ModifiedAt = x.ModiFiedAt
+            ModifiedAt = x.ModiFiedAt,
+            ContentType = (ContentType)x.ContentType
         }).OrderBy(x=> x.Number).ToListAsync();
 
         public async Task<SiteContentViewModel?> GetById(long id) => await _context.siteContent.Where(x => x.Id == id).Select(x => new SiteContentViewModel
@@ -58,15 +61,17 @@ namespace WebAdinux.Core.Services
             Number = x.Number,
             Icon = x.Icon,
             Title = x.Title,
+            ContentType = (ContentType)x.ContentType
         }).FirstOrDefaultAsync();
 
-        public async Task<bool> Remove(long id)
+        public async Task<long> Remove(long id)
         {
             var content = await _context.siteContent.FirstOrDefaultAsync(x=> x.Id == id);
-            if(content == null) return false;
+            if(content == null) return 0;
+            var headerId = content.HeaderId;
             _context.siteContent.Remove(content);
             await _context.SaveChangesAsync();
-            return true;
+            return headerId;
         }
 
         public async Task<bool> Update(long id, SiteContentViewModel viewModel)

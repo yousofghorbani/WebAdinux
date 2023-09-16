@@ -19,5 +19,9 @@ namespace WebAdinux.Core.Security
 
             return BitConverter.ToString(encodeBytes);
         }
+        public static string FileCode()
+        {
+            return Guid.NewGuid().ToString().Replace("-", "");
+        }
     }
 }

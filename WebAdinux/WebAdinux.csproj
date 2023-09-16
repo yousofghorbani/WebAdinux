@@ -21,4 +21,8 @@
     <ProjectReference Include="..\WebAinux.IOC\WebAdinux.IOC.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\Upload\" />
+  </ItemGroup>
+
 </Project>

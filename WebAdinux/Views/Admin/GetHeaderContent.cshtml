@@ -1,0 +1,100 @@
+﻿@model IEnumerable<WebAdinux.Core.ViewMoels.GetSiteContentViewModel>
+
+@{
+    ViewData["Title"] = "GetHeaderContent";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h3 class="pull-left" style="margin-top:130px;">
+    @ViewBag.HeaderTitle Content
+</h3>
+<h3 class="pull-right" style="margin-top:130px;">
+    <a href="#" onclick="Create(@ViewBag.HeaderId)" class="btn btn-primary">Add</a>
+</h3>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Number)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ContentType)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Number)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ContentType)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "EditContent", new {  id=item.Id  }) |
+                    <a href="#" onclick="Details(@item.Id)"> Details</a> |
+                    @Html.ActionLink("Delete", "DeleteContent", new {  id=item.Id  })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section mySection
+    {
+
+    <script>
+        function Create(id) {
+            $.ajax({
+                url: "/Admin/CreateContent/" + id,
+                type: "Get",
+                data: {}
+            }).done(function (result) {
+                $('#myModal').modal('show');
+                $('#bodyModal').html(result);
+            });
+        }
+    </script>
+
+    <script>
+        function Edit(id) {
+            $.ajax({
+                url: "/Admin/EditHeader/" + id,
+                type: "Get",
+                data: {}
+            }).done(function (result) {
+                $('#myModal').modal('show');
+                $('#bodyModal').html(result);
+            });
+        }
+    </script>
+
+    <script>
+        function Details(id) {
+            $.ajax({
+                url: "/Admin/ContentDetails/" + id,
+                type: "Get",
+                data: {}
+            }).done(function (result) {
+                $('#myModal').modal('show');
+                $('#bodyModal').html(result);
+            });
+        }
+    </script>
+}

@@ -1,4 +1,7 @@
-﻿namespace WebAdinux.Core.ViewMoels
+﻿using Microsoft.AspNetCore.Http;
+using WebAdinux.Context.Enums;
+
+namespace WebAdinux.Core.ViewMoels
 {
     public class SiteContentViewModel
     {
@@ -6,8 +9,10 @@
         public string? Description { get; set; }
         public string? Icon { get; set; }
         public string? FileLink { get; set; }
+        public IFormFile? UploadFile { get; set; }
         public int Number { get; set; }
         public long HeaderId { get; set; }
+        public ContentType ContentType { get; set; }
     }
     public class GetSiteContentViewModel : SiteContentViewModel
     {

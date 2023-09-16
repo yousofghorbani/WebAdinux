@@ -2,9 +2,11 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.VisualStudio.Web.CodeGeneration;
 using System.Security.Claims;
 using WebAdinux.Context.Enums;
 using WebAdinux.Core.Interfaces;
+using WebAdinux.Core.Security;
 using WebAdinux.Core.ViewMoels;
 
 namespace WebAdinux.Controllers
@@ -171,7 +173,86 @@ namespace WebAdinux.Controllers
 
         #region Site Content
 
+        [Authorize]
+        public async Task<IActionResult> GetHeaderContent(long id)
+        {
+            ViewBag.HeaderId = id;
+            ViewBag.HeaderTitle = (await _siteHeader.GetById(id)).Title;
+            try
+            {
+                var res = await _siteContent.GetByHeaderId(id);
+                return View(res);
+            }
+            catch
+            {
+                return View(new List<GetSiteContentViewModel>());
+            }
+        }
 
+        [Authorize]
+        public async Task<IActionResult> GetContentById(long id)
+        {
+            var res = await _siteContent.GetById(id);
+            return View(res);
+        }
+
+        [Authorize]
+        public async Task<IActionResult> DeleteContent(long id)
+        {
+            var res = await _siteContent.Remove(id);
+            if(res == 0) return NotFound();
+            return Redirect("/Admin/GetHeaderContent/" + res);
+        }
+
+        [Authorize]
+        public IActionResult CreateContent(long id)
+        {
+            ViewBag.HeaderId = id;
+            return View();
+        }
+        [HttpPost, Authorize]
+        public async Task<IActionResult> CreateContent(long id, SiteContentViewModel viewModel)
+        {
+            if (viewModel.ContentType == ContentType.Img || viewModel.ContentType == ContentType.Video)
+            {
+                if (viewModel.UploadFile != null)
+                {
+                    string filePath = "";
+                    viewModel.FileLink = HashGenerators.FileCode() + Path.GetExtension(viewModel.UploadFile.FileName);
+                    filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Upload/", viewModel.FileLink);
+
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        viewModel.UploadFile.CopyTo(stream);
+                    }
+                }
+            }
+
+            viewModel.HeaderId = id;
+            await _siteContent.Add(viewModel);
+
+            return Redirect("/Admin/GetHeaderContent/" + id);
+        }
+
+        [Authorize]
+        public async Task<IActionResult> EditContent(long id)
+        {
+            var res = await _siteContent.GetById(id);
+            return View(res);
+        }
+
+        [HttpPost, Authorize]
+        public async Task<IActionResult> EditContent()
+        {
+            return View();
+        }
+
+        [Authorize]
+        public async Task<IActionResult> ContentDetails(long id)
+        {
+            var res = await _siteContent.GetById(id);
+            return View(res);
+        }
 
         #endregion
     }

@@ -1,0 +1,61 @@
+﻿@model WebAdinux.Core.ViewMoels.SiteContentViewModel
+@using WebAdinux.Context.Enums;
+@{
+    ViewData["Title"] = "ContentDetails";
+    Layout = null;
+}
+
+
+
+<div class="modal-header">
+    <h5 class="modal-title">Details</h5>
+</div>
+<hr />
+<dl class="row">
+    <dt class="col-sm-2">
+        @Html.DisplayNameFor(model => model.Title)
+    </dt>
+    <dd class="col-sm-10">
+        @Html.DisplayFor(model => model.Title)
+    </dd>
+    <dt class="col-sm-2">
+        @Html.DisplayNameFor(model => model.Description)
+    </dt>
+    <dd class="col-sm-10">
+        <p>@Html.DisplayFor(model => model.Description)</p>
+    </dd>
+    <dt class="col-sm-2">
+        @Html.DisplayNameFor(model => model.Icon)
+    </dt>
+    <dd class="col-sm-10">
+        @Html.DisplayFor(model => model.Icon)
+        @if(Model.Icon != null)
+        {
+            <i class="fa fa-@Model.Icon"></i>
+        }
+    </dd>
+    <dt class="col-sm-2">
+        @Html.DisplayNameFor(model => model.FileLink)
+    </dt>
+    <dd class="col-sm-10">
+        @Html.DisplayFor(model => model.FileLink)
+    </dd>
+    <dt class="col-sm-2">
+        @Html.DisplayNameFor(model => model.Number)
+    </dt>
+    <dd class="col-sm-10">
+        @Html.DisplayFor(model => model.Number)
+    </dd>
+    <dt class="col-sm-2">
+        @Html.DisplayNameFor(model => model.HeaderId)
+    </dt>
+    <dd class="col-sm-10">
+        @Html.DisplayFor(model => model.HeaderId)
+    </dd>
+    <dt class="col-sm-2">
+        Type
+    </dt>
+    <dd class="col-sm-10">
+        @Model.ContentType.ToString()
+    </dd>
+</dl>
