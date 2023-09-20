@@ -84,6 +84,7 @@ namespace WebAdinux.Core.Services
             content.Icon = viewModel.Icon;
             content.FileLink = viewModel.FileLink;
             content.Number = viewModel.Number;
+            content.ContentType = (short)viewModel.ContentType;
             //content.HeaderId = viewModel.HeaderId;
             content.ModiFiedAt = DateTime.Now;
 

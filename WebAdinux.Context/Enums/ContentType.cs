@@ -5,9 +5,12 @@
         h2 = 1,
         h3,
         h4,
-        Pargraph,
         Box,
         Img,
-        Video
+        SliderImg,
+        Video,
+        h2Title,
+        h3Title,
+        BoxTitle
     }
 }
