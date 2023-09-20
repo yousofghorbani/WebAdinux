@@ -8,10 +8,10 @@
     <div class="container">
 
         <header class="section-header">
-            <h3>@Model.FirstOrDefault(x=> x.ContentType == WebAdinux.Context.Enums.ContentType.h3Title).Title</h3>
-            <h2>@Model.FirstOrDefault(x=> x.ContentType == WebAdinux.Context.Enums.ContentType.h2Title).Title</h2>
-            <p>@Model.FirstOrDefault(x=> x.ContentType == WebAdinux.Context.Enums.ContentType.h2Title).Description</p>
-            <h3>@Model.FirstOrDefault(x=> x.ContentType == WebAdinux.Context.Enums.ContentType.BoxTitle).Title</h3>
+            <h3>@Model.First(x=> x.ContentType == WebAdinux.Context.Enums.ContentType.h3Title).Title</h3>
+            <h2>@Model.First(x=> x.ContentType == WebAdinux.Context.Enums.ContentType.h2Title).Title</h2>
+            <p>@Model.First(x=> x.ContentType == WebAdinux.Context.Enums.ContentType.h2Title).Description</p>
+            <h3>@Model.First(x=> x.ContentType == WebAdinux.Context.Enums.ContentType.BoxTitle).Title</h3>
         </header>
 
         <div class="row justify-content-center align-items-center">
