@@ -60,13 +60,10 @@
             @if (item.ContentType == WebAdinux.Context.Enums.ContentType.Video)
             {
                 <div class="embed-responsive embed-responsive-16by9 d-flex justify-content-center align-items-center margin-top-50">
-                    <div>
                         <video class="demoVideo" controls style="width:90%; height:auto; box-sizing:border-box; object-fit:contain; overflow:clip;">
                             <source src="~/Upload/@item.FileLink" type="video/mp4">
                             Your browser does not support the video tag.
                         </video>
-                    </div>
-                    
                 </div>
             }
         }
