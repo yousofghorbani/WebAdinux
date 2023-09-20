@@ -13,6 +13,7 @@ namespace WebAdinux.Core.ViewMoels
         public int Number { get; set; }
         public long HeaderId { get; set; }
         public ContentType ContentType { get; set; }
+        public string? Color { get; set; }
     }
     public class GetSiteContentViewModel : SiteContentViewModel
     {

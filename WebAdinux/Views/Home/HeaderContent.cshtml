@@ -19,7 +19,7 @@
             {
                 <div class="col-md-6 col-lg-4 wow bounceInUp" data-wow-duration="1.4s">
                     <div class="box">
-                        <div class="icon" style="background: #fceef3;"><i class="fa fa-@item.Icon" style="color: #ff689b;"></i></div>
+                        <div class="icon" style="background: #fceef3;"><i class="fa fa-@item.Icon" style="color: @item.Color"></i></div>
                         <h4 class="title"><a href="">@item.Title</a></h4>
                         <p class="description">@item.Description</p>
                     </div>
@@ -55,15 +55,18 @@
             }
             @if (item.ContentType == WebAdinux.Context.Enums.ContentType.Img)
             {
-                <img src="~/Upload/@item.FileLink" class="col-md-11" />
+                <img class="d-block w-100 margin-top-50" src="~/Upload/@item.FileLink">
             }
             @if (item.ContentType == WebAdinux.Context.Enums.ContentType.Video)
             {
-                <div class="embed-responsive embed-responsive-16by9 d-flex justify-content-center">
-                    <video class="demoVideo" controls style="width:90%; height:auto; box-sizing:border-box; object-fit:contain; overflow:clip;">
-                        <source src="~/Upload/@item.FileLink" type="video/mp4">
-                        Your browser does not support the video tag.
-                    </video>
+                <div class="embed-responsive embed-responsive-16by9 d-flex justify-content-center align-items-center margin-top-50">
+                    <div>
+                        <video class="demoVideo" controls style="width:90%; height:auto; box-sizing:border-box; object-fit:contain; overflow:clip;">
+                            <source src="~/Upload/@item.FileLink" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                    
                 </div>
             }
         }

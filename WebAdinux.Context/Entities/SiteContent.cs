@@ -9,6 +9,7 @@
         public int Number { get; set; }
         public long HeaderId { get; set; }
         public short ContentType { get; set; }
+        public string? Color { get; set; }
 
         public SiteHeader siteHeader { get; set; }
     }

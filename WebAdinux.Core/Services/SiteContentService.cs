@@ -30,7 +30,8 @@ namespace WebAdinux.Core.Services
                 FileLink = viewModel.FileLink,
                 Number = viewModel.Number,
                 HeaderId = viewModel.HeaderId,
-                ContentType = (short)viewModel.ContentType
+                ContentType = (short)viewModel.ContentType,
+                Color = viewModel.Color,
             };
 
             await _context.siteContent.AddAsync(content);
@@ -50,7 +51,8 @@ namespace WebAdinux.Core.Services
             HeaderId = x.HeaderId,
             CreatedAt = x.CreatedAt,
             ModifiedAt = x.ModiFiedAt,
-            ContentType = (ContentType)x.ContentType
+            ContentType = (ContentType)x.ContentType,
+            Color = x.Color
         }).OrderBy(x=> x.Number).ToListAsync();
 
         public async Task<SiteContentViewModel?> GetById(long id) => await _context.siteContent.Where(x => x.Id == id).Select(x => new SiteContentViewModel
@@ -61,7 +63,8 @@ namespace WebAdinux.Core.Services
             Number = x.Number,
             Icon = x.Icon,
             Title = x.Title,
-            ContentType = (ContentType)x.ContentType
+            ContentType = (ContentType)x.ContentType,
+            Color = x.Color
         }).FirstOrDefaultAsync();
 
         public async Task<long> Remove(long id)
@@ -87,6 +90,7 @@ namespace WebAdinux.Core.Services
             content.ContentType = (short)viewModel.ContentType;
             //content.HeaderId = viewModel.HeaderId;
             content.ModiFiedAt = DateTime.Now;
+            content.Color = viewModel.Color;
 
             await _context.SaveChangesAsync();
 
