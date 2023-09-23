@@ -1,35 +1,38 @@
 ﻿@model IEnumerable<WebAdinux.Core.ViewMoels.GetSiteHeaderViewModel>
 
-@foreach (var item in Model.Where(x=> x.HasDropDown == true))
+@foreach (var item in Model.Where(x => x.HasDropDown == true))
 {
-    <li class="drop-down">
-        <a href="">@item.Title</a>
-        <ul>
-            @if (item.Id == 10004)
-            {
-                <li><a href="/Adicamp">Adi-Camp</a></li>
-                <li><a href="/Adimatch">Adi-Match</a></li>
-            }
-            @if (item.Id == 10005)
-            {
-                <li><a href="/Adishow">Adi-Show</a></li>
-                <li><a href="/Adiroom">Adi-Room</a></li>
-                <li><a href="/Adimag">Adi-Bots</a></li>
-                <li><a href="/Adishop">Adi-Shop</a></li>
-            }
-            @if (item.Id == 10006)
-            {
-                <li><a href="/Adilyze">Adi-Lyze</a></li>
-                <li><a href="/Adibox">Adi-Box</a></li>
-            }
-            @if(Model.Any(x=> x.ParentId == item.Id && x.Visible == true))
-            {
-                @foreach (var subItem in Model.Where(x => x.ParentId == item.Id && x.Visible == true))
+    @if (item.Id == 10004 || item.Id == 10005 || item.Id == 10006 || Model.Any(x => x.ParentId == item.Id && x.Visible == true))
+    {
+        <li class="drop-down">
+            <a href="">@item.Title</a>
+            <ul>
+                @if (item.Id == 10004)
                 {
-                    <li><a href="/Headers/@subItem.Id/@subItem.Link">@subItem.Title</a></li>
+                    <li><a href="/Adicamp">Adi-Camp</a></li>
+                    <li><a href="/Adimatch">Adi-Match</a></li>
                 }
-            }
-        </ul>
-    </li>
-    
+                @if (item.Id == 10005)
+                {
+                    <li><a href="/Adishow">Adi-Show</a></li>
+                    <li><a href="/Adiroom">Adi-Room</a></li>
+                    <li><a href="/Adimag">Adi-Bots</a></li>
+                    <li><a href="/Adishop">Adi-Shop</a></li>
+                }
+                @if (item.Id == 10006)
+                {
+                    <li><a href="/Adilyze">Adi-Lyze</a></li>
+                    <li><a href="/Adibox">Adi-Box</a></li>
+                }
+                @if (Model.Any(x => x.ParentId == item.Id && x.Visible == true))
+                {
+                    @foreach (var subItem in Model.Where(x => x.ParentId == item.Id && x.Visible == true))
+                    {
+                        <li><a href="/Headers/@subItem.Id/@subItem.Link">@subItem.Title</a></li>
+                    }
+                }
+            </ul>
+        </li>
+
+    }
 }
