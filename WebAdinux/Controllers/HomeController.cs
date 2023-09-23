@@ -10,10 +10,12 @@ namespace WebAdinux.Controllers
     {
         private readonly IEmailMessage _email;
         private readonly ISiteContent _content;
-        public HomeController(IEmailMessage email, ISiteContent content)
+        private readonly ISiteHeader _header;
+        public HomeController(IEmailMessage email, ISiteContent content, ISiteHeader header)
         {
             _email = email;
             _content = content;
+            _header = header;
         }
 
         public IActionResult Index()
@@ -83,9 +85,16 @@ namespace WebAdinux.Controllers
         [Route("/Headers/{id}/{header}")]
         public async Task<IActionResult> HeaderContent(long id, string header)
         {
+            var siteHeader = await _header.GetById(id);
+            if (siteHeader == null || siteHeader.HasDropDown == true || siteHeader.Visible == false) return NotFound();
             List<GetSiteContentViewModel> contents = await _content.GetByHeaderId(id);
             if (contents.Any()) return View(contents);
             return NotFound();
+        }
+        [Route("/NotFound")]
+        public IActionResult PageNotFound()
+        {
+            return View();
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

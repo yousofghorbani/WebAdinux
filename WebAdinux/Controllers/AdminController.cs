@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualStudio.Web.CodeGeneration;
 using System.Security.Claims;
+using WebAdinux.Context.Entities;
 using WebAdinux.Context.Enums;
 using WebAdinux.Core.Interfaces;
 using WebAdinux.Core.Security;
@@ -103,37 +104,55 @@ namespace WebAdinux.Controllers
 
         [HttpPost]
         [Authorize]
-        public async Task<IActionResult> CreateHeader(SiteHeaderViewModel viewModel)
+        public async Task<IActionResult> CreateHeader(SiteSubHeaderViewModel viewModel)
         {
             if(!ModelState.IsValid) return View(viewModel);
 
-            viewModel.HasDropDown = true;
-            var res = await _siteHeader.Add(viewModel);
+            SiteHeaderViewModel siteHeader = new SiteHeaderViewModel();
+            siteHeader.Visible = viewModel.VisibleType == Visible.Visible ? true : false;
+            siteHeader.HasDropDown = true;
+            siteHeader.Title = viewModel.Title;
+            
+            var res = await _siteHeader.Add(siteHeader);
             return Redirect("/Admin/SiteHeaders");
         }
 
         [Authorize]
         public async Task<IActionResult> EditHeader(long id)
         {
-            return View(await _siteHeader.GetById(id));
-        }
+            var res = await _siteHeader.GetById(id);
 
-        [Authorize]
-        public async Task<IActionResult> DeleteHeader(long id)
-        {
-            var res = await _siteHeader.Delete(id);
-            return Redirect("/Admin/SiteHeaders");
+            SiteSubHeaderViewModel siteSubHeader = new SiteSubHeaderViewModel();
+            siteSubHeader.Title = res.Title;
+            siteSubHeader.VisibleType = res.Visible == true ? Visible.Visible : Visible.UnVisible;
+            siteSubHeader.HasDropDown = res.HasDropDown;
+
+            return View(siteSubHeader);
         }
 
         [HttpPost]
         [Authorize]
-        public async Task<IActionResult> EditHeader(long id, SiteHeaderViewModel viewModel)
+        public async Task<IActionResult> EditHeader(long id, SiteSubHeaderViewModel viewModel)
         {
             if (!ModelState.IsValid) return View(viewModel);
 
-            var res = await _siteHeader.Update(id ,viewModel);
+            SiteHeaderViewModel siteHeader = new SiteHeaderViewModel();
+            siteHeader.Visible = viewModel.VisibleType == Visible.Visible ? true : false;
+            siteHeader.HasDropDown = true;
+            siteHeader.Title = viewModel.Title;
+
+            var res = await _siteHeader.Update(id, siteHeader);
             return Redirect("/Admin/SiteHeaders");
         }
+
+        //[Authorize]
+        //public async Task<IActionResult> DeleteHeader(long id)
+        //{
+        //    var res = await _siteHeader.Delete(id);
+        //    return Redirect("/Admin/SiteHeaders");
+        //}
+
+        
 
         [Authorize]
         public IActionResult CreateSubHeader(long id)
