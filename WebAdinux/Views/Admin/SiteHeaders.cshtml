@@ -51,7 +51,7 @@
 
                                 @foreach (var subItem in Model.Where(x => x.ParentId == item.Id))
                                 {
-                                    <div class="panel panel-default">
+                                    <div class="panel panel-default" style="background-color: @(subItem.Visible == true ? "deepskyblue": "#f5f5f5")">
 
                                         <div class="panel-heading">
 

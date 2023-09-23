@@ -143,29 +143,51 @@ namespace WebAdinux.Controllers
 
         [HttpPost]
         [Authorize]
-        public async Task<IActionResult> CreateSubHeader(long id, SiteHeaderViewModel viewModel)
+        public async Task<IActionResult> CreateSubHeader(long id, SiteSubHeaderViewModel viewModel)
         {
             if (!ModelState.IsValid) return View(viewModel);
-
-            viewModel.HasDropDown = false;
-            viewModel.ParentId = id;
-            var res = await _siteHeader.Add(viewModel);
+            
+            
+            SiteHeaderViewModel siteHeader = new SiteHeaderViewModel();
+            siteHeader.Visible = viewModel.VisibleType == Visible.Visible ? true : false;
+            siteHeader.HasDropDown = false;
+            siteHeader.ParentId = id;
+            siteHeader.Title = viewModel.Title;
+            siteHeader.Link = viewModel.Link;
+            var res = await _siteHeader.Add(siteHeader);
             return Redirect("/Admin/SiteHeaders");
         }
 
         [Authorize]
         public async Task<IActionResult> EditSubHeader(long id)
         {
-            return View(await _siteHeader.GetById(id));
+            var res = await _siteHeader.GetById(id);
+
+            SiteSubHeaderViewModel siteSubHeader = new SiteSubHeaderViewModel();
+            siteSubHeader.Title = res.Title;
+            siteSubHeader.Link = res.Link;
+            siteSubHeader.VisibleType = res.Visible == true ? Visible.Visible : Visible.UnVisible;
+            siteSubHeader.HasDropDown = res.HasDropDown;
+            siteSubHeader.ParentId = res.ParentId;
+            siteSubHeader.HasDropDown = res.HasDropDown;
+
+            return View(siteSubHeader);
         }
 
         [HttpPost]
         [Authorize]
-        public async Task<IActionResult> EditSubHeader(long id, SiteHeaderViewModel viewModel)
+        public async Task<IActionResult> EditSubHeader(long id, SiteSubHeaderViewModel viewModel)
         {
             if (!ModelState.IsValid) return View(viewModel);
 
-            var res = await _siteHeader.Update(id, viewModel);
+            SiteHeaderViewModel siteHeader = new SiteHeaderViewModel();
+            siteHeader.Visible = viewModel.VisibleType == Visible.Visible ? true : false;
+            siteHeader.HasDropDown = false;
+            siteHeader.ParentId = viewModel.ParentId;
+            siteHeader.Title = viewModel.Title;
+            siteHeader.Link = viewModel.Link;
+
+            var res = await _siteHeader.Update(id, siteHeader);
             return Redirect("/Admin/SiteHeaders");
         }
 

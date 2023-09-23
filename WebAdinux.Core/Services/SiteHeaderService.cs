@@ -33,6 +33,7 @@ namespace WebAdinux.Core.Services
                 Link = viewModel.Link,
                 ParentId = viewModel.ParentId,
                 Title = viewModel.Title,
+                Visible = viewModel.Visible,
             };
             await _context.siteHeaders.AddAsync(siteHeader);
 
@@ -58,10 +59,11 @@ namespace WebAdinux.Core.Services
             HasDropDown = x.HasDropDown,
             Link = x.Link,
             ModifiedAt = x.ModiFiedAt,
-            ParentId = x.ParentId
+            ParentId = x.ParentId,
+            Visible= x.Visible,
         }).ToListAsync();
 
-        public async Task<SiteHeaderViewModel> GetById(long id) => await _context.siteHeaders.Where(x => x.Id == id).Select(x => new SiteHeaderViewModel { HasDropDown = x.HasDropDown, Link = x.Link, ParentId = x.ParentId, Title = x.Title }).FirstOrDefaultAsync();
+        public async Task<SiteHeaderViewModel> GetById(long id) => await _context.siteHeaders.Where(x => x.Id == id).Select(x => new SiteHeaderViewModel { HasDropDown = x.HasDropDown, Link = x.Link, ParentId = x.ParentId, Title = x.Title, Visible =  x.Visible }).FirstOrDefaultAsync();
 
         public async Task<bool> Update(long id, SiteHeaderViewModel viewModel)
         {
@@ -82,6 +84,7 @@ namespace WebAdinux.Core.Services
             siteHeader.Title = viewModel.Title;
             siteHeader.ModiFiedAt = DateTime.Now;
             siteHeader.Link = viewModel.Link;
+            siteHeader.Visible = viewModel.Visible;
             //siteHeader.ParentId = viewModel.ParentId;
             //siteHeader.HasDropDown = (bool)viewModel.HasDropDown;
 

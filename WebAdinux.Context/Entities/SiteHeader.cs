@@ -6,7 +6,7 @@
         public string? Link { get; set; }
         public bool HasDropDown { get; set; }
         public long? ParentId { get; set; }
-
+        public bool? Visible { get; set; }
 
         public SiteHeader siteHeader { get; set; }
         public ICollection<SiteHeader> siteHeaders { get; set; }
