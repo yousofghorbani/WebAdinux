@@ -34,7 +34,8 @@ Header
                 <li><a href="#services">Toolbox</a></li> *@
                 @*<li><a href="#portfolio">Portfolio</a></li>*@
                 @* <li><a href="#team">Team</a></li> *@
-                <li class="drop-down">
+                @(await Component.InvokeAsync("HeaderComponent"))
+                @* <li class="drop-down">
                     <a href="">Pre-show</a>
                     <ul>
                         <li><a href="/Adicamp">Adi-Camp</a></li>
@@ -56,7 +57,7 @@ Header
                         <li><a href="/Adilyze">Adi-Lyze</a></li>
                         <li><a href="/Adibox">Adi-Box</a></li>
                     </ul>
-                </li>
+                </li> *@
                 @*<li class="drop-down">
                     <a href="">Services</a>
                     <ul>
