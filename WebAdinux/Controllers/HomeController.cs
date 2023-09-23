@@ -86,10 +86,10 @@ namespace WebAdinux.Controllers
         public async Task<IActionResult> HeaderContent(long id, string header)
         {
             var siteHeader = await _header.GetById(id);
-            if (siteHeader == null || siteHeader.HasDropDown == true || siteHeader.Visible == false) return NotFound();
+            if (siteHeader == null || siteHeader.HasDropDown == true || siteHeader.Visible == false) return Redirect("/NotFound");
             List<GetSiteContentViewModel> contents = await _content.GetByHeaderId(id);
             if (contents.Any()) return View(contents);
-            return NotFound();
+            return Redirect("/NotFound");
         }
         [Route("/NotFound")]
         public IActionResult PageNotFound()
