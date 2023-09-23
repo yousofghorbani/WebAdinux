@@ -43,6 +43,11 @@ app.Use(async (context, next) =>
         context.Request.Path = "/NotFound";
         await next();
     }
+    if (context.Response.StatusCode == 500)
+    {
+        context.Request.Path = "/ServerError";
+        await next();
+    }
 });
 
 app.UseHttpsRedirection();
