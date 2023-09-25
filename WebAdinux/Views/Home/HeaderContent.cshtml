@@ -39,52 +39,120 @@
             </div>
         }
 
-        @if (Model.Any(x => x.ContentType != WebAdinux.Context.Enums.ContentType.h3Title && x.ContentType != WebAdinux.Context.Enums.ContentType.h2Title && x.ContentType != WebAdinux.Context.Enums.ContentType.BoxTitle && x.ContentType != WebAdinux.Context.Enums.ContentType.SliderImg && x.ContentType != WebAdinux.Context.Enums.ContentType.Box))
+        @if (Model.Any(x => x.ContentType != WebAdinux.Context.Enums.ContentType.h3Title && x.ContentType != WebAdinux.Context.Enums.ContentType.h2Title && x.ContentType != WebAdinux.Context.Enums.ContentType.BoxTitle && x.ContentType != WebAdinux.Context.Enums.ContentType.Box))
         {
-
-            @foreach (var item in Model.Where(x => x.ContentType != WebAdinux.Context.Enums.ContentType.h3Title && x.ContentType != WebAdinux.Context.Enums.ContentType.h2Title && x.ContentType != WebAdinux.Context.Enums.ContentType.BoxTitle && x.ContentType != WebAdinux.Context.Enums.ContentType.SliderImg && x.ContentType != WebAdinux.Context.Enums.ContentType.Box).OrderBy(x => x.Number))
+            var myModel = Model.Where(x => x.ContentType != WebAdinux.Context.Enums.ContentType.h3Title && x.ContentType != WebAdinux.Context.Enums.ContentType.h2Title && x.ContentType != WebAdinux.Context.Enums.ContentType.BoxTitle && x.ContentType != WebAdinux.Context.Enums.ContentType.Box).OrderBy(x => x.Number).ToList();
+            @for (int i = 0; i < myModel.Count(); i++)
             {
-                @if (item.ContentType == WebAdinux.Context.Enums.ContentType.h2)
+                @if (myModel[i].ContentType == WebAdinux.Context.Enums.ContentType.h2)
                 {
                     <div class="justify-content-center align-items-center">
-                        <h2>@item.Title</h2>
-                        <p>@item.Description</p>
+                        <h2>@myModel[i].Title</h2>
+                        <p>@myModel[i].Description</p>
                     </div>
                     <div class="clearfix"></div>
                 }
-                @if (item.ContentType == WebAdinux.Context.Enums.ContentType.h3)
+                @if (myModel[i].ContentType == WebAdinux.Context.Enums.ContentType.h3)
                 {
                     <div class="justify-content-center align-items-center">
-                        <h3>@item.Title</h3>
-                        <p>@item.Description</p>
+                        <h3>@myModel[i].Title</h3>
+                        <p>@myModel[i].Description</p>
                     </div>
                     <div class="clearfix"></div>
                 }
-                @if (item.ContentType == WebAdinux.Context.Enums.ContentType.h4)
+                @if (myModel[i].ContentType == WebAdinux.Context.Enums.ContentType.h4)
                 {
                     <div class="justify-content-center align-items-center">
-                        <h4>@item.Title</h4>
-                        <p>@item.Description</p>
+                        <h4>@myModel[i].Title</h4>
+                        <p>@myModel[i].Description</p>
                     </div>
                     <div class="clearfix"></div>
                 }
-                @if (item.ContentType == WebAdinux.Context.Enums.ContentType.Img)
+                @if (myModel[i].ContentType == WebAdinux.Context.Enums.ContentType.Img)
                 {
-                    <img class="d-block w-100 margin-top-50" src="~/Upload/@item.FileLink">
+                    <img class="d-block w-100 margin-top-50" src="~/Upload/@myModel[i].FileLink">
                 }
-                @if (item.ContentType == WebAdinux.Context.Enums.ContentType.Video)
+                @if (myModel[i].ContentType == WebAdinux.Context.Enums.ContentType.Video)
                 {
                     <div class="embed-responsive embed-responsive-16by9 d-flex justify-content-center align-items-center margin-top-50">
                         <video class="demoVideo" controls style="width:80%; height:auto; box-sizing:border-box; object-fit:contain; overflow:clip;">
-                            <source src="~/Upload/@item.FileLink" type="video/mp4">
+                            <source src="~/Upload/@myModel[i].FileLink" type="video/mp4">
                             Your browser does not support the video tag.
                         </video>
+                    </div>
+                }
+                @if(myModel[i].ContentType == WebAdinux.Context.Enums.ContentType.SliderImg)
+                {
+                    bool active = true;
+                    bool end = false;
+                    int startI = i;
+                    int j = 0;
+                    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                        <ol class="carousel-indicators">
+                            @while (!end)
+                            {
+                                if (active == true)
+                                {
+                                    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                                    active = false;
+                                }
+                                else
+                                {
+                                    <li data-target="#carouselExampleIndicators" data-slide-to="@j"></li>
+                                }
+                                j++;
+                                i++;
+                                @if(myModel[i].ContentType != WebAdinux.Context.Enums.ContentType.SliderImg)
+                                {
+                                    end = true;
+                                    i = startI;
+                                    j = 0;
+                                    active = true;
+                                }
+                            }
+                        </ol>
+                        <div class="carousel-inner">
+                            @{
+                                end = false;
+                            }
+                            @while (!end)
+                            {
+                                if (active)
+                                {
+                                    <div class="carousel-item active">
+                                        <img class="d-block w-100" src="~/Upload/@myModel[i].FileLink" alt="First slide">
+                                    </div>
+
+                                    active = false;
+                                }
+                                else
+                                {
+                                    <div class="carousel-item">
+                                        <img class="d-block w-100" src="~/Upload/@myModel[i].FileLink" alt="Second slide">
+                                    </div>
+                                }
+                                i++;
+                                @if (myModel[i].ContentType != WebAdinux.Context.Enums.ContentType.SliderImg)
+                                {
+                                    end = true;
+                                    active = true;
+                                    i--;                                }
+                            }
+                        </div>
+                        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Next</span>
+                        </a>
                     </div>
                 }
             }
         }
 
-        @if (Model.Any(x => x.ContentType == WebAdinux.Context.Enums.ContentType.SliderImg))
+        @* @if (Model.Any(x => x.ContentType == WebAdinux.Context.Enums.ContentType.SliderImg))
         {
             <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
                 <ol class="carousel-indicators">
@@ -132,7 +200,7 @@
                     <span class="sr-only">Next</span>
                 </a>
             </div>
-        }
+        } *@
 
         
 
