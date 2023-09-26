@@ -87,22 +87,29 @@
                     bool end = false;
                     int startI = i;
                     int j = 0;
-                    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                    <div id=@("carouselExampleIndicators" + startI.ToString()) class="carousel slide" data-ride="carousel">
                         <ol class="carousel-indicators">
                             @while (!end)
                             {
                                 if (active == true)
                                 {
-                                    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                                    <li data-target=@("#carouselExampleIndicators" + startI.ToString()) data-slide-to="0" class="active"></li>
                                     active = false;
                                 }
                                 else
                                 {
-                                    <li data-target="#carouselExampleIndicators" data-slide-to="@j"></li>
+                                    <li data-target=@("#carouselExampleIndicators" + startI.ToString()) data-slide-to="@j"></li>
                                 }
                                 j++;
                                 i++;
-                                @if(myModel[i].ContentType != WebAdinux.Context.Enums.ContentType.SliderImg)
+                                @if (i >= myModel.Count)
+                                {
+                                    end = true;
+                                    active = true;
+                                    j = 0;
+                                    i = startI;
+                                }
+                                else if(myModel[i].ContentType != WebAdinux.Context.Enums.ContentType.SliderImg)
                                 {
                                     end = true;
                                     i = startI;
@@ -132,18 +139,24 @@
                                     </div>
                                 }
                                 i++;
-                                @if (myModel[i].ContentType != WebAdinux.Context.Enums.ContentType.SliderImg)
+                                @if(i>= myModel.Count)
                                 {
                                     end = true;
                                     active = true;
-                                    i--;                                }
+                                }
+                                else if (myModel[i].ContentType != WebAdinux.Context.Enums.ContentType.SliderImg)
+                                {
+                                    end = true;
+                                    active = true;
+                                    i--;
+                                }
                             }
                         </div>
-                        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                        <a class="carousel-control-prev" href=@("#carouselExampleIndicators" + startI.ToString()) role="button" data-slide="prev">
                             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                             <span class="sr-only">Previous</span>
                         </a>
-                        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                        <a class="carousel-control-next" href=@("#carouselExampleIndicators" + startI.ToString()) role="button" data-slide="next">
                             <span class="carousel-control-next-icon" aria-hidden="true"></span>
                             <span class="sr-only">Next</span>
                         </a>
