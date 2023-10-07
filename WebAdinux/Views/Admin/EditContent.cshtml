@@ -23,6 +23,11 @@
         <span asp-validation-for="Description" class="text-danger"></span>
     </div>
     <div class="form-group">
+        <label asp-for="HtmlContent" class="control-label"></label>
+        <textarea asp-for="HtmlContent" class="form-control" rows="3"></textarea>
+        <span asp-validation-for="HtmlContent" class="text-danger"></span>
+    </div>
+    <div class="form-group">
         <label asp-for="Icon" class="control-label"></label>
         <input asp-for="Icon" class="form-control" />
         <span asp-validation-for="Icon" class="text-danger"></span>
@@ -65,3 +70,12 @@
         <input type="submit" value="Save" class="btn btn-primary" />
     </div>
 </form>
+
+<script src="~/ckeditor/ckeditor.js"></script>
+<script src="~/ckeditor/adapters/jquery.js"></script>
+
+<script>
+    $(function () {
+        $('#HtmlContent').ckeditor();
+    });
+</script>

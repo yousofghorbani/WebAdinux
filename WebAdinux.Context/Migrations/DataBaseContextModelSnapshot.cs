@@ -90,6 +90,9 @@ namespace WebAdinux.Context.Migrations
                     b.Property<long>("HeaderId")
                         .HasColumnType("bigint");
 
+                    b.Property<string>("HtmlContent")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Icon")
                         .HasColumnType("nvarchar(max)");
 

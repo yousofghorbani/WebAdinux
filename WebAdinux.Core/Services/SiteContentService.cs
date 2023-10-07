@@ -32,6 +32,7 @@ namespace WebAdinux.Core.Services
                 HeaderId = viewModel.HeaderId,
                 ContentType = (short)viewModel.ContentType,
                 Color = viewModel.Color,
+                HtmlContent = viewModel.HtmlContent
             };
 
             await _context.siteContent.AddAsync(content);
@@ -64,7 +65,8 @@ namespace WebAdinux.Core.Services
             Icon = x.Icon,
             Title = x.Title,
             ContentType = (ContentType)x.ContentType,
-            Color = x.Color
+            Color = x.Color,
+            HtmlContent = x.HtmlContent,
         }).FirstOrDefaultAsync();
 
         public async Task<long> Remove(long id)
@@ -91,6 +93,7 @@ namespace WebAdinux.Core.Services
             //content.HeaderId = viewModel.HeaderId;
             content.ModiFiedAt = DateTime.Now;
             content.Color = viewModel.Color;
+            content.HtmlContent = viewModel.HtmlContent;
 
             await _context.SaveChangesAsync();
 

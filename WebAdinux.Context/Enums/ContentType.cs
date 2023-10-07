@@ -11,6 +11,7 @@
         Video,
         h2Title,
         h3Title,
-        BoxTitle
+        BoxTitle,
+        Html
     }
 }

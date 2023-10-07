@@ -1,9 +1,14 @@
-﻿namespace WebAdinux.Context.Entities
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace WebAdinux.Context.Entities
 {
     public class SiteContent : BaseEntity
     {
         public string Title { get; set; }
+        [DataType(DataType.MultilineText)]
         public string? Description { get; set; }
+        [DataType(DataType.MultilineText)]
+        public string? HtmlContent { get; set; }
         public string? Icon { get; set; }
         public string? FileLink { get; set; }
         public int Number { get; set; }

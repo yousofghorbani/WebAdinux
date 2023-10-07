@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using System.ComponentModel.DataAnnotations;
 using WebAdinux.Context.Enums;
 
 namespace WebAdinux.Core.ViewMoels
@@ -6,7 +7,11 @@ namespace WebAdinux.Core.ViewMoels
     public class SiteContentViewModel
     {
         public string Title { get; set; }
+        [DataType(DataType.MultilineText)]
         public string? Description { get; set; }
+        
+        [DataType(DataType.MultilineText)]
+        public string? HtmlContent { get; set; }
         public string? Icon { get; set; }
         public string? FileLink { get; set; }
         public IFormFile? UploadFile { get; set; }
