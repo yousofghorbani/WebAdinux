@@ -41,7 +41,7 @@ namespace WebAdinux.Core.Services
             return true;
         }
 
-        public async Task<List<GetSiteContentViewModel>> GetByHeaderId(long headerId) => await _context.siteContent.Where(x=> x.HeaderId == headerId).Select(x=> new GetSiteContentViewModel
+        public async Task<List<GetSiteContentViewModel>> GetByHeaderId(long headerId) => await _context.siteContent.Where(x => x.HeaderId == headerId).Select(x => new GetSiteContentViewModel
         {
             Id = x.Id,
             Title = x.Title,
@@ -53,8 +53,9 @@ namespace WebAdinux.Core.Services
             CreatedAt = x.CreatedAt,
             ModifiedAt = x.ModiFiedAt,
             ContentType = (ContentType)x.ContentType,
-            Color = x.Color
-        }).OrderBy(x=> x.Number).ToListAsync();
+            Color = x.Color,
+            HtmlContent = x.HtmlContent
+        }).OrderBy(x => x.Number).ToListAsync();
 
         public async Task<SiteContentViewModel?> GetById(long id) => await _context.siteContent.Where(x => x.Id == id).Select(x => new SiteContentViewModel
         {
@@ -71,8 +72,8 @@ namespace WebAdinux.Core.Services
 
         public async Task<long> Remove(long id)
         {
-            var content = await _context.siteContent.FirstOrDefaultAsync(x=> x.Id == id);
-            if(content == null) return 0;
+            var content = await _context.siteContent.FirstOrDefaultAsync(x => x.Id == id);
+            if (content == null) return 0;
             var headerId = content.HeaderId;
             _context.siteContent.Remove(content);
             await _context.SaveChangesAsync();
@@ -83,7 +84,7 @@ namespace WebAdinux.Core.Services
         {
             var content = await _context.siteContent.FirstOrDefaultAsync(x => x.Id == id);
             if (content == null) return false;
-            
+
             content.Title = viewModel.Title;
             content.Description = viewModel.Description;
             content.Icon = viewModel.Icon;
