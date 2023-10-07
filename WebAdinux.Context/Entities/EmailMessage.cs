@@ -12,5 +12,6 @@ namespace WebAdinux.Context.Entities
         public string subject { get; set; }
         [Required, MaxLength(2000)]
         public string MessageContent { get; set; }
+        public bool IsArchived { get; set; }
     }
 }

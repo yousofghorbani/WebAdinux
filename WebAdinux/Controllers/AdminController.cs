@@ -75,8 +75,29 @@ namespace WebAdinux.Controllers
         [Authorize]
         public async Task<IActionResult> RecivedMails()
         {
-            var res = await _emailMessage.GetAll();
+            var res = await _emailMessage.GetAll(false);
             return View(res);
+        }
+        [Authorize]
+        public async Task<IActionResult> ArchivedMails()
+        {
+            var res = await _emailMessage.GetAll(true);
+            return View(res);
+        }
+
+        [Authorize]
+        public async Task<IActionResult> Archive(long id)
+        {
+            var res = await _emailMessage.Archive(id);
+            if (res == false) return NotFound();
+            return Redirect("/Admin/RecivedMails/");
+        }
+        [Authorize]
+        public async Task<IActionResult> UnArchive(long id)
+        {
+            var res = await _emailMessage.UnArchive(id);
+            if (res == false) return NotFound();
+            return Redirect("/Admin/ArchivedMails/");
         }
 
         [Authorize]

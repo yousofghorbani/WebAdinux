@@ -25,6 +25,7 @@ namespace WebAdinux.Core.Services
                     subject = viewModel.subject,
                     Email = viewModel.Email,
                     MessageContent = viewModel.MessageContent,
+                    IsArchived = false
                 };
                 await _context.emailMessages.AddAsync(email);
                 await _context.SaveChangesAsync();
@@ -36,7 +37,7 @@ namespace WebAdinux.Core.Services
             }
         }
 
-        public async Task<List<GetEmailMessageViewModel>> GetAll() => await _context.emailMessages.Select(x=> new GetEmailMessageViewModel
+        public async Task<List<GetEmailMessageViewModel>> GetAll(bool isArchived) => await _context.emailMessages.Where(x=> x.IsArchived == isArchived).Select(x => new GetEmailMessageViewModel
         {
             Id = x.Id,
             Name = x.Name,
@@ -56,7 +57,26 @@ namespace WebAdinux.Core.Services
             Email = x.Email,
             subject = x.subject,
             MessageContent = x.MessageContent,
-        }).FirstOrDefaultAsync(x=> x.Id == id);
+        }).FirstOrDefaultAsync(x => x.Id == id);
 
+        public async Task<bool> Archive(long id)
+        {
+            var mail = await _context.emailMessages.FirstOrDefaultAsync(x=> x.Id == id);
+            if(mail == null) return false;
+            mail.IsArchived = true;
+            mail.ModiFiedAt = DateTime.Now;
+            await _context.SaveChangesAsync();
+            return true;
+        }
+
+        public async Task<bool> UnArchive(long id)
+        {
+            var mail = await _context.emailMessages.FirstOrDefaultAsync(x => x.Id == id);
+            if (mail == null) return false;
+            mail.IsArchived = false;
+            mail.ModiFiedAt = DateTime.Now;
+            await _context.SaveChangesAsync();
+            return true;
+        }
     }
 }
