@@ -50,10 +50,25 @@
                 </td>
                 <td>
                     @*@Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |*@
-                    @Html.ActionLink("Details", "RecivedMailDetails", new {  id=item.Id  })
+                    <a href="#" onclick="Details(@item.Id)">Content</a>
                     @*@Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })*@
                 </td>
             </tr>
         }
     </tbody>
 </table>
+@section mySection
+    {
+    <script>
+        function Details(id) {
+            $.ajax({
+                url: "/Admin/RecivedMailDetails/" + id,
+                type: "Get",
+                data: {}
+            }).done(function (result) {
+                $('#myModal').modal('show');
+                $('#bodyModal').html(result);
+            });
+        }
+    </script>
+}
