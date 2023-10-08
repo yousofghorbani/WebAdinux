@@ -275,7 +275,7 @@ namespace WebAdinux.Controllers
         [HttpPost, Authorize]
         public async Task<IActionResult> CreateContent(long id, SiteContentViewModel viewModel)
         {
-            if (viewModel.ContentType == ContentType.Img || viewModel.ContentType == ContentType.Video || viewModel.ContentType == ContentType.SliderImg)
+            if (viewModel.ContentType == ContentType.Img || viewModel.ContentType == ContentType.Video || viewModel.ContentType == ContentType.SliderImg || viewModel.ContentType == ContentType.LeftImageHtml || viewModel.ContentType == ContentType.RigthImageHtml)
             {
                 if (viewModel.UploadFile != null)
                 {
