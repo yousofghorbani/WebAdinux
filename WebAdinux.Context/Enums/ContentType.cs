@@ -12,6 +12,8 @@
         h2Title,
         h3Title,
         BoxTitle,
-        Html
+        Html,
+        LeftImageHtml,
+        RigthImageHtml
     }
 }

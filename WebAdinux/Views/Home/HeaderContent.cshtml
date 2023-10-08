@@ -43,9 +43,34 @@
             var myModel = Model.Where(x => x.ContentType != WebAdinux.Context.Enums.ContentType.h3Title && x.ContentType != WebAdinux.Context.Enums.ContentType.h2Title && x.ContentType != WebAdinux.Context.Enums.ContentType.BoxTitle && x.ContentType != WebAdinux.Context.Enums.ContentType.Box).OrderBy(x => x.Number).ToList();
             @for (int i = 0; i < myModel.Count(); i++)
             {
+                @if(myModel[i].ContentType == WebAdinux.Context.Enums.ContentType.LeftImageHtml)
+                {
+                    <div class="row" style="margin-top:20px;">
+                        <div class="col-lg-6">
+                            <img src="~/Upload/@myModel[i].FileLink" class="img-fluid" alt="">
+                        </div>
+                        <div class="col-lg-6">
+                            @Html.Raw(myModel[i].HtmlContent)
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                }
+                @if (myModel[i].ContentType == WebAdinux.Context.Enums.ContentType.RigthImageHtml)
+                {
+                    <div class="row" style="margin-top:20px;">
+                        <div class="col-lg-6">
+                            @Html.Raw(myModel[i].HtmlContent)
+                        </div>
+                        <div class="col-lg-6">
+                            <img src="~/Upload/@myModel[i].FileLink" class="img-fluid" alt="">
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                }
+
                 @if (myModel[i].ContentType == WebAdinux.Context.Enums.ContentType.Html)
                 {
-                    <div class="justify-content-center align-items-center">
+                    <div class="justify-content-center align-items-center" style="margin-top:20px;">
                         @Html.Raw(myModel[i].HtmlContent)
                     </div>
                     <div class="clearfix"></div>
@@ -53,7 +78,7 @@
 
                 @if (myModel[i].ContentType == WebAdinux.Context.Enums.ContentType.h2)
                 {
-                    <div class="justify-content-center align-items-center">
+                    <div class="justify-content-center align-items-center" style="margin-top:20px;">
                         <h2>@myModel[i].Title</h2>
                         <p>@myModel[i].Description</p>
                     </div>
@@ -61,7 +86,7 @@
                 }
                 @if (myModel[i].ContentType == WebAdinux.Context.Enums.ContentType.h3)
                 {
-                    <div class="justify-content-center align-items-center">
+                    <div class="justify-content-center align-items-center" style="margin-top:20px;">
                         <h3>@myModel[i].Title</h3>
                         <p>@myModel[i].Description</p>
                     </div>
@@ -69,7 +94,7 @@
                 }
                 @if (myModel[i].ContentType == WebAdinux.Context.Enums.ContentType.h4)
                 {
-                    <div class="justify-content-center align-items-center">
+                    <div class="justify-content-center align-items-center" style="margin-top:20px;">
                         <h4>@myModel[i].Title</h4>
                         <p>@myModel[i].Description</p>
                     </div>
@@ -94,7 +119,7 @@
                     bool end = false;
                     int startI = i;
                     int j = 0;
-                    <div id=@("carouselExampleIndicators" + startI.ToString()) class="carousel slide" data-ride="carousel">
+                    <div id=@("carouselExampleIndicators" + startI.ToString()) class="carousel slide margin-top-50" data-ride="carousel">
                         <ol class="carousel-indicators">
                             @while (!end)
                             {

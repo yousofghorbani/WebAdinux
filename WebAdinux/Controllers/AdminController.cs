@@ -307,7 +307,7 @@ namespace WebAdinux.Controllers
         public async Task<IActionResult> EditContent(long id, SiteContentViewModel viewModel)
         {
             var content = await _siteContent.GetById(id);
-            if (viewModel.ContentType == ContentType.Img || viewModel.ContentType == ContentType.Video || viewModel.ContentType == ContentType.SliderImg)
+            if (viewModel.ContentType == ContentType.Img || viewModel.ContentType == ContentType.Video || viewModel.ContentType == ContentType.SliderImg || viewModel.ContentType == ContentType.LeftImageHtml || viewModel.ContentType == ContentType.RigthImageHtml)
             {
                 if (viewModel.UploadFile != null)
                 {
