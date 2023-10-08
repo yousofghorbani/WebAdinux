@@ -88,7 +88,10 @@ namespace WebAdinux.Core.Services
             content.Title = viewModel.Title;
             content.Description = viewModel.Description;
             content.Icon = viewModel.Icon;
-            content.FileLink = viewModel.FileLink;
+            if (viewModel.FileLink != null)
+            {
+                content.FileLink = viewModel.FileLink;
+            }
             content.Number = viewModel.Number;
             content.ContentType = (short)viewModel.ContentType;
             //content.HeaderId = viewModel.HeaderId;

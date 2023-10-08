@@ -42,6 +42,10 @@
         <input asp-for="UploadFile" class="form-control" />
         <span asp-validation-for="UploadFile" class="text-danger"></span>
     </div>
+    @if (Model.ContentType == ContentType.Img || Model.ContentType == ContentType.SliderImg || Model.ContentType == ContentType.LeftImageHtml || Model.ContentType == ContentType.RigthImageHtml)
+    {
+        <img src="~/Upload/@Model.FileLink" class="col-12" />
+    }
     @* <div class="form-group hide">
     <label asp-for="FileLink" class="control-label"></label>
     <input asp-for="FileLink" class="form-control" />
