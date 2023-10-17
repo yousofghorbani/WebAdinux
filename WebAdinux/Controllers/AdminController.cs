@@ -37,7 +37,7 @@ namespace WebAdinux.Controllers
         }
         public IActionResult Login()
         {
-            if(HttpContext.User.Claims.Any())
+            if (HttpContext.User.Claims.Any())
             {
                 return RedirectToAction("RecivedMails", "Admin");
             }
@@ -49,8 +49,8 @@ namespace WebAdinux.Controllers
             if (!ModelState.IsValid)
                 return View(viewModel);
             var res = await _user.FindUser(viewModel);
-            if (res == null) 
-            { 
+            if (res == null)
+            {
                 ModelState.AddModelError("Password", "Username or password is incorrect");
                 return View(viewModel);
             }
@@ -127,13 +127,13 @@ namespace WebAdinux.Controllers
         [Authorize]
         public async Task<IActionResult> CreateHeader(SiteSubHeaderViewModel viewModel)
         {
-            if(!ModelState.IsValid) return View(viewModel);
+            if (!ModelState.IsValid) return View(viewModel);
 
             SiteHeaderViewModel siteHeader = new SiteHeaderViewModel();
             siteHeader.Visible = viewModel.VisibleType == Visible.Visible ? true : false;
             siteHeader.HasDropDown = true;
             siteHeader.Title = viewModel.Title;
-            
+
             var res = await _siteHeader.Add(siteHeader);
             return Redirect("/Admin/SiteHeaders");
         }
@@ -173,7 +173,7 @@ namespace WebAdinux.Controllers
         //    return Redirect("/Admin/SiteHeaders");
         //}
 
-        
+
 
         [Authorize]
         public IActionResult CreateSubHeader(long id)
@@ -186,8 +186,8 @@ namespace WebAdinux.Controllers
         public async Task<IActionResult> CreateSubHeader(long id, SiteSubHeaderViewModel viewModel)
         {
             if (!ModelState.IsValid) return View(viewModel);
-            
-            
+
+
             SiteHeaderViewModel siteHeader = new SiteHeaderViewModel();
             siteHeader.Visible = viewModel.VisibleType == Visible.Visible ? true : false;
             siteHeader.HasDropDown = false;
@@ -238,10 +238,11 @@ namespace WebAdinux.Controllers
         [Authorize]
         public async Task<IActionResult> GetHeaderContent(long id)
         {
-            ViewBag.HeaderId = id;
-            ViewBag.HeaderTitle = (await _siteHeader.GetById(id)).Title;
             try
             {
+                ViewBag.HeaderId = id;
+                ViewBag.HeaderTitle = (await _siteHeader.GetById(id)).Title;
+
                 var res = await _siteContent.GetByHeaderId(id);
                 return View(res);
             }
@@ -262,7 +263,7 @@ namespace WebAdinux.Controllers
         public async Task<IActionResult> DeleteContent(long id)
         {
             var res = await _siteContent.Remove(id);
-            if(res == 0) return NotFound();
+            if (res == 0) return NotFound();
             return Redirect("/Admin/GetHeaderContent/" + res);
         }
 

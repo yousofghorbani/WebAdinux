@@ -2,15 +2,14 @@
 
 @{
     ViewData["Title"] = "SiteHeaders";
-    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    Layout = "~/Views/Shared/_AdminLayout2.cshtml";
 }
 
-
-<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="margin-top: 150px">
+<div class="col-lg-6 col-lg-offset-3 col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-10 col-xs-offset-1" style="margin-top: 50px">
 
     <div class="margin-top-50">
 
-        <h3 class="pu">
+        <h3 class="pull-left">
             <a href="#" onclick="Create()" class="btn btn-primary">Create</a>
         </h3>
 
@@ -20,12 +19,12 @@
 
     <div class="margin-top-50">
 
-        <div class="accordion">
+        <div class="panel-group">
 
             @foreach (var item in Model.Where(x => x.ParentId == null))
             {
 
-                <div class="panel panel-default" style="background-color: @(item.Visible == true ? "aquamarine": "#f5f5f5")">
+                <div class="panel @(item.Visible == true ? " panel-info": " panel-default")">
 
                     <div class="panel-heading">
 
@@ -51,7 +50,7 @@
 
                                 @foreach (var subItem in Model.Where(x => x.ParentId == item.Id))
                                 {
-                                    <div class="panel panel-default" style="background-color: @(subItem.Visible == true ? "deepskyblue": "#f5f5f5")">
+                                    <div class="panel @(subItem.Visible == true ? " panel-warning": " panel-default")">
 
                                         <div class="panel-heading">
 
@@ -65,6 +64,8 @@
                                             </h4>
 
                                         </div>
+
+                                        
                                     </div>
                                 }
 
@@ -83,6 +84,8 @@
     </div>
 
 </div>
+
+
 
 
 
