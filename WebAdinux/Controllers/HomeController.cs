@@ -110,6 +110,7 @@ namespace WebAdinux.Controllers
             if (ModelState.IsValid)
             {
                 await _appointment.Add(viewModel);
+                return RedirectToAction("MailSended", "Home");
             }
             return View(viewModel);
         }

@@ -71,7 +71,7 @@
                             <div class="validation"></div>
                         </div>
                         <div class="form-group col-lg-6 col-md-6 col-12">
-                            <input type="text" class="form-control" name="Phone" id="Phone" placeholder="Phone" data-rule="minlen:10" data-msg="Please enter a True Mobile Number" />
+                            <input type="text" class="form-control" name="Phone" id="Phone" placeholder="Phone" onkeypress="return /[0-9]/i.test(event.key)" data-rule="minlen:10" data-msg="Please enter a True Mobile Number" />
                             <div class="validation"></div>
                         </div>
                         <div class="form-group col-lg-6 col-md-6 col-12">
@@ -82,6 +82,8 @@
                             <textarea class="form-control" name="Description" id="Description" rows="5" placeholder="Briefly describe your product needs"></textarea>
                             <div class="validation"></div>
                         </div>
+                        
+                        <div id="response" class="col-12"></div>
 
                         <div class="text-center"><button class="adinuxbtn" type="submit" title="Send Message">Send Message</button></div>
                     </div>
