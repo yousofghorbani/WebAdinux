@@ -24,6 +24,7 @@ namespace WebAdinux.Context.Context
         public DbSet<EmailMessage> emailMessages { get; set; }
         public DbSet<SiteHeader> siteHeaders { get; set; }
         public DbSet<SiteContent> siteContent { get; set; }
+        public DbSet<Appointment> appointments { get; set; }
 
         #endregion
 
@@ -35,6 +36,7 @@ namespace WebAdinux.Context.Context
             modelBuilder.Entity<EmailMessage>().HasKey(x=> x.Id);
             modelBuilder.Entity<SiteHeader>().HasKey(x=> x.Id);
             modelBuilder.Entity<SiteContent>().HasKey(x=> x.Id);
+            modelBuilder.Entity<Appointment>().HasKey(x=> x.Id);
 
             #endregion
 
