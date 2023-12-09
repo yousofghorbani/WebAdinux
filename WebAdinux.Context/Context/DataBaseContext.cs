@@ -9,7 +9,7 @@ namespace WebAdinux.Context.Context
         public DataBaseContext CreateDbContext(string[] args)
         {
             var optionsBuilder = new DbContextOptionsBuilder<DataBaseContext>();
-            optionsBuilder.UseSqlServer(@"Server=.;Database=WebAdinux;User Id=admin;Password=aA123456;Trusted_Connection=SSPI;Encrypt=false;TrustServerCertificate=true");
+            optionsBuilder.UseSqlServer(@"Server=.;Database=WebAdinux;User Id=admin;Password=aA123456;Encrypt=false;", options => options.EnableRetryOnFailure());
 
             return new DataBaseContext(optionsBuilder.Options);
         }

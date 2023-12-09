@@ -11,7 +11,7 @@ builder.Services.AddControllersWithViews();
 //builder.Services.AddReCaptcha(builder.Configuration.GetSection("ReCaptcha"));
 builder.Services.RegisterServices(builder.Configuration);
 builder.Services.AddDbContext<DataBaseContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"), options => options.EnableRetryOnFailure()));
 
 builder.Services.AddAuthentication(options =>
 {
@@ -30,7 +30,8 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
-    app.UseExceptionHandler("/Home/Error");
+    //app.UseExceptionHandler("/Home/Error");
+    //app.UseDeveloperExceptionPage();
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
