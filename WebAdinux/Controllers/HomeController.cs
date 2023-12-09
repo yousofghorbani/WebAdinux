@@ -11,11 +11,13 @@ namespace WebAdinux.Controllers
         private readonly IEmailMessage _email;
         private readonly ISiteContent _content;
         private readonly ISiteHeader _header;
-        public HomeController(IEmailMessage email, ISiteContent content, ISiteHeader header)
+        private readonly IAppointment _appointment;
+        public HomeController(IEmailMessage email, ISiteContent content, ISiteHeader header, IAppointment appointment)
         {
             _email = email;
             _content = content;
             _header = header;
+            _appointment = appointment;
         }
 
         public IActionResult Index()
@@ -100,6 +102,16 @@ namespace WebAdinux.Controllers
         public IActionResult ServerError()
         {
             return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> SendAppointment(AppointmentViewModel viewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                await _appointment.Add(viewModel);
+            }
+            return View(viewModel);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

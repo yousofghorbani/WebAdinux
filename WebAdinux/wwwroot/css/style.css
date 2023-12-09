@@ -1644,3 +1644,17 @@ h6 {
 .panel-body {
     padding: 15px;
 }
+
+.adinuxbtn[type="submit"] {
+    background: #ff5c2c;
+    border: 0;
+    border-radius: 3px;
+    padding: 8px 30px;
+    color: #fff;
+    transition: 0.3s;
+}
+
+.adinuxbtn[type="submit"]:hover {
+    background: #0a98c0;
+    cursor: pointer;
+}
