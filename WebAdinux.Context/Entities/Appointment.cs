@@ -13,5 +13,6 @@ namespace WebAdinux.Context.Entities
         [Required]
         public DateTime PreferredDate { get; set; }
         public string? Description { get; set; }
+        public bool IsArchived { get; set; }
     }
 }

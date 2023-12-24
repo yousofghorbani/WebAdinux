@@ -1,0 +1,18 @@
+﻿@model WebAdinux.Core.ViewMoels.GetAppointmentViewModel
+
+@{
+    ViewData["Title"] = "AppointmentDetails";
+    Layout = null;
+}
+
+<div class="modal-header">
+    <h5 class="modal-title">@Model.FullName   Details</h5>
+</div>
+<hr />
+<div class="modal-body">
+    <dl class="row">
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+    </dl>
+</div>

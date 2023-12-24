@@ -26,6 +26,7 @@ namespace WebAdinux.Core.Services
                     Email = viewModel.Email,
                     Phone = viewModel.Phone,
                     PreferredDate = viewModel.PreferredDate,
+                    IsArchived = false
                 };
                 await _context.appointments.AddAsync(appointment);
                 await _context.SaveChangesAsync();
@@ -37,7 +38,7 @@ namespace WebAdinux.Core.Services
             }
         }
 
-        public async Task<List<GetAppointmentViewModel>> GetAll() => await _context.appointments.Select(x => new GetAppointmentViewModel
+        public async Task<List<GetAppointmentViewModel>> GetAll(bool isArchive) => await _context.appointments.Where(x=> x.IsArchived == isArchive).Select(x => new GetAppointmentViewModel
         {
             Id = x.Id,
             CreatedAt = x.CreatedAt,
@@ -47,7 +48,7 @@ namespace WebAdinux.Core.Services
             ModifiedAt = x.ModiFiedAt,
             Phone = x.Phone,
             PreferredDate = x.PreferredDate,
-        }).ToListAsync();
+        }).OrderByDescending(x=> x.Id).ToListAsync();
 
         public async Task<GetAppointmentViewModel?> GetById(long id) => await _context.appointments.Select(x => new GetAppointmentViewModel
         {
@@ -60,5 +61,25 @@ namespace WebAdinux.Core.Services
             Phone = x.Phone,
             PreferredDate = x.PreferredDate,
         }).FirstOrDefaultAsync(x => x.Id == id);
+
+        public async Task<bool> Archive(long id)
+        {
+            var appointment = await _context.appointments.FirstOrDefaultAsync(x => x.Id == id);
+            if (appointment == null) return false;
+            appointment.IsArchived = true;
+            appointment.ModiFiedAt = DateTime.Now;
+            await _context.SaveChangesAsync();
+            return true;
+        }
+
+        public async Task<bool> UnArchive(long id)
+        {
+            var appointment = await _context.appointments.FirstOrDefaultAsync(x => x.Id == id);
+            if (appointment == null) return false;
+            appointment.IsArchived = false;
+            appointment.ModiFiedAt = DateTime.Now;
+            await _context.SaveChangesAsync();
+            return true;
+        }
     }
 }

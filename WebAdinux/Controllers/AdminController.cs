@@ -18,13 +18,15 @@ namespace WebAdinux.Controllers
         private readonly IEmailMessage _emailMessage;
         private readonly ISiteHeader _siteHeader;
         private readonly ISiteContent _siteContent;
+        private readonly IAppointment _appointment;
 
-        public AdminController(IUser user, IEmailMessage emailMessage, ISiteHeader siteHeader, ISiteContent siteContent)
+        public AdminController(IUser user, IEmailMessage emailMessage, ISiteHeader siteHeader, ISiteContent siteContent, IAppointment appointment)
         {
             _user = user;
             _emailMessage = emailMessage;
             _siteHeader = siteHeader;
             _siteContent = siteContent;
+            _appointment = appointment;
         }
 
         #region Identity
@@ -334,6 +336,44 @@ namespace WebAdinux.Controllers
         {
             var res = await _siteContent.GetById(id);
             return View(res);
+        }
+
+        #endregion
+
+        #region Appointment
+
+        [Authorize]
+        public async Task<IActionResult> Appointments()
+        {
+            var res = await _appointment.GetAll(false);
+            return View(res);
+        }
+        [Authorize]
+        public async Task<IActionResult> ArchivedAppointments()
+        {
+            var res = await _appointment.GetAll(true);
+            return View(res);
+        }
+        [Authorize]
+        public async Task<IActionResult> AppointmentDetails([FromRoute] long id)
+        {
+            var res = await _appointment.GetById(id);
+            return View(res);
+        }
+
+        [Authorize]
+        public async Task<IActionResult> ArchiveAppointment(long id)
+        {
+            var res = await _appointment.Archive(id);
+            if (res == false) return NotFound();
+            return Redirect("/Admin/Appointments/");
+        }
+        [Authorize]
+        public async Task<IActionResult> UnArchiveAppointment(long id)
+        {
+            var res = await _appointment.UnArchive(id);
+            if (res == false) return NotFound();
+            return Redirect("/Admin/ArchivedAppointments/");
         }
 
         #endregion
